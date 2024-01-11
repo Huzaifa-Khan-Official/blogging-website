@@ -7,6 +7,11 @@
 /* navbar */
 .navbar {
     padding: 10px 50px;
+    padding-left: 20px;
+}
+
+.navbar-brand img {
+    width: 50px;
 }
 
 .listDiv ul {
@@ -45,7 +50,7 @@
 
 /* blogCardDiv */
 .blogCardDiv {
-    margin: 10px 0;
+    margin: 20px 0;
     display: flex;
     padding: 24px;
     flex-direction: column;
@@ -54,6 +59,12 @@
     border-radius: 12px;
     border: 1px solid #DEE2E6;
     background: #FFF;
+}
+
+.blogCard {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 
@@ -71,6 +82,62 @@
     border-radius: inherit;
 }
 
+.blogDetailDiv {
+    display: flex;
+    gap: 15px;
+}
+
+.blogDetail {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.publishDetail h6 {
+    color: #6C757D;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.blogDescDiv {
+    color: #6C757D;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+}
+
+.allFromThisUserDiv a {
+    color: #7749F8;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+}
+
 /* end blogCardDiv */
 
 /* end allBlogDiv */
+
+
+/* footerDiv */
+.footerDiv {
+    padding: 15px 20px;
+}
+
+.footerDiv h6 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.footerDiv h6 a:hover {
+    transition: all .3s;
+    text-decoration: underline;
+    color: #7749F8;
+}
+/* end footerDiv */
