@@ -22,7 +22,6 @@
 /* headingDiv */
 .headingDiv {
     display: flex;
-    width: 1440px;
     padding: 32px 50px;
     flex-direction: column;
     justify-content: center;
@@ -50,6 +49,19 @@
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+}
+
+.contentDiv {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.profileDetailDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 0;
 }
 
 /* blogCardDiv */
@@ -144,4 +156,53 @@
     text-decoration: underline;
     color: #7749F8;
 }
+
 /* end footerDiv */
+
+/* profileDetailDiv */
+.profileNameDiv h1 {
+    color: var(--Primary-Color, #7749F8);
+    font-family: Inter;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.8px;
+}
+
+.profileImgDiv img {
+    height: 293px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    border: 1px solid var(--Gray-300, #DEE2E6);
+    background: lightgray -7.163px -7.095px / 102.388% 102.454% no-repeat;
+}
+
+.profileEmailDiv p {
+    color: #152536;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-decoration-line: underline;
+}
+
+/* end profileDetailDiv */
+
+@media (max-width: 768px) {
+    .contentDiv {
+        flex-direction: column-reverse;
+    }
+
+    .blogCardMainDiv,
+    .profileDetailDiv {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .allBlogDiv {
+        padding: 40px 20px;
+    }
+}
