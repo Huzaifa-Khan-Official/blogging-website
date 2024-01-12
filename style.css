@@ -18,6 +18,34 @@
     margin-bottom: 0 !important;
 }
 
+.navbar-nav {
+    gap: 15px;
+}
+
+.signupBtn {
+    background-color: #7849f8b0;
+    color: white;
+    border-radius: 20px;
+    padding: 5px 15px;
+    transition: all .3s;
+}
+
+.signupBtn:hover {
+    background-color: #7749F8;
+}
+
+.loginBtn {
+    border: 1px solid #7749F8;
+    border-radius: 20px;
+    padding: 5px 15px;
+    transition: all .3s;
+}
+
+.loginBtn:hover {
+    color: white;
+    background-color: #7749F8;
+}
+
 /* end navbar */
 /* headingDiv */
 .headingDiv {
@@ -140,3 +168,10 @@
     color: #7749F8;
 }
 /* end footerDiv */
+
+
+@media (max-width: 576px) {
+    .allBlogDiv {
+        padding: 40px 20px;
+    }
+}
