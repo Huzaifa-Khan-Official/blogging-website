@@ -26,7 +26,7 @@ body {
     gap: 15px;
 }
 
-.loginBtn {
+.signupBtn {
     background-color: #7849f8b0;
     color: white;
     border-radius: 20px;
@@ -34,8 +34,9 @@ body {
     transition: all .3s;
 }
 
-.loginBtn:hover {
+.signupBtn:hover {
     background-color: #7749F8;
+    color: white;
 }
 
 /* end navbar */
@@ -74,21 +75,25 @@ body {
 
 .form-control:focus {
     border-color: #7749F8;
-    /* color: rgb(119, 73, 248); */
     box-shadow: 0 0 0 0.25rem rgba(119, 73, 248, .25);
 }
 
-.signupBtnDiv {
+.loginBtnDiv {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.signupBtnDiv button {
+.loginBtnDiv button {
     color: white;
     border: none;
     padding: 8px 16px;
     border-radius: 6px;
+    background: #7849f8c6;
+    transition: all .3s;
+}
+
+.loginBtnDiv button:hover {    
     background: #7749F8;
 }
 

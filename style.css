@@ -31,6 +31,8 @@
 }
 
 .signupBtn:hover {
+    color: white;
+
     background-color: #7749F8;
 }
 
