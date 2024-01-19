@@ -2,6 +2,11 @@ import {
   app,
   auth,
   createUserWithEmailAndPassword,
+  db,
+  collection,
+  addDoc,
+  doc,
+  setDoc,
 } from "./Firebase Configuration/config.js";
 
 const signupBtn = document.getElementById("signupBtn");
@@ -18,49 +23,107 @@ function removeLoader() {
   document.body.style.overflowY = "scroll";
 }
 
-signupBtn.addEventListener("click", () => {
+signupBtn && signupBtn.addEventListener("click", () => {
   displayLoader();
   const firstNameInp = document.getElementById("firstNameInp");
   const lastNameInp = document.getElementById("lastNameInp");
   const emailInp = document.getElementById("emailInp");
   const passowrdInp = document.getElementById("passowrdInp");
 
-  if (confirmPasswordInp.value == passowrdInp.value) {
-    const userData = {
-      firstName: firstNameInp.value,
-      lastName: lastNameInp.value,
-      email: emailInp.value,
-      password: passowrdInp.value,
-    };
-
-    createUserWithEmailAndPassword(auth, userData.email, userData.password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        removeLoader();
-      })
-      .catch((error) => {
-        removeLoader();
-        const errorCode = error.code;
-        const errorMessage = errorCode.slice(5).toUpperCase();
-        const errMessage = errorMessage.replace(/-/g, " ");
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: errMessage,
-        });
-      });
-  } else {
+  if (
+    firstNameInp.value == "" &&
+    lastNameInp.value == "" &&
+    emailInp.value == "" &&
+    passowrdInp.value == ""
+  ) {
     removeLoader();
     Swal.fire({
       icon: "error",
-      title: "Oops...",
-      text: "Please Confirm your Password!",
+      title: "Error",
+      text: "Please fill all fields!",
+    });
+  } else if (firstNameInp.value == "") {
+    removeLoader();
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Please first name field!",
+    });
+    location.href = "#firstNameInp";
+  } else if (lastNameInp.value == "") {
+    removeLoader();
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Please last name field!",
+    });
+    location.href = "#lastNameInp";
+  } else if (emailInp.value == "") {
+    removeLoader();
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Please email field!",
+    });
+    location.href = "#emailInp";
+  } else if (passowrdInp.value == "") {
+    removeLoader();
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Please password field!",
+    });
+    location.href = "#passowrdInp";
+  } else if (confirmPasswordInp.value == "") {
+    removeLoader();
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Please confirm password field!",
     });
     location.href = "#confirmPasswordInp";
+  } else {
+    if (confirmPasswordInp.value == passowrdInp.value) {
+      const userData = {
+        firstName: firstNameInp.value,
+        lastName: lastNameInp.value,
+        email: emailInp.value,
+        password: passowrdInp.value,
+      };
+
+      createUserWithEmailAndPassword(auth, userData.email, userData.password)
+        .then(async (userCredential) => {
+          const user = userCredential.user;
+          await setDoc(doc(db, "user", user.uid), {
+            ...userData,
+            userId : user.uid
+          });
+          removeLoader();
+          console.log(user);
+        })
+        .catch((error) => {
+          removeLoader();
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: errorMessage,
+          });
+        });
+    } else {
+      removeLoader();
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Please Confirm your Password!",
+      });
+      location.href = "#confirmPasswordInp";
+    }
   }
 });
 
-confirmPasswordInp.addEventListener("keypress", (e) => {
+confirmPasswordInp && confirmPasswordInp.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
     signupBtn.click();
   }
