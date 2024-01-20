@@ -30,7 +30,6 @@ if (location.pathname == "/user/home.html") {
 }
 
 const getUserData = async (id) => {
-  displayLoader();
   const docRef = doc(db, "user", id);
   const docSnap = await getDoc(docRef);
 
@@ -38,7 +37,10 @@ const getUserData = async (id) => {
     // docSnap.data()
     if (location.pathname == "/user/home.html") {
       const userName = document.getElementById("userName");
-      const firstName = docSnap.data().firstName.replace(/\s/g, "").toUpperCase();
+      const firstName = docSnap
+        .data()
+        .firstName.replace(/\s/g, "")
+        .toUpperCase();
       const lastName = docSnap.data().lastName.replace(/\s/g, "").toUpperCase();
       userName.innerHTML = `${firstName} ${lastName}`;
       removeLoader();
@@ -48,15 +50,13 @@ const getUserData = async (id) => {
   }
 };
 
-let flag = false;
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    getUserData(user.uid);
+     getUserData(user.uid);
     if (
       location.pathname !== "/user/dashboard.html" &&
-      location.pathname !== "/user/home.html" &&
-      flag
+      location.pathname !== "/user/home.html"
     ) {
       location.href = "/user/dashboard.html";
     }
@@ -85,9 +85,9 @@ signupBtn &&
     const passowrdInp = document.getElementById("passowrdInp");
 
     if (
-      firstNameInp.value == "" &&
-      lastNameInp.value == "" &&
-      emailInp.value == "" &&
+      firstNameInp.value == "" ||
+      lastNameInp.value == "" ||
+      emailInp.value == "" ||
       passowrdInp.value == ""
     ) {
       removeLoader();
@@ -96,47 +96,49 @@ signupBtn &&
         title: "Error",
         text: "Please fill all fields!",
       });
-    } else if (firstNameInp.value == "") {
-      removeLoader();
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Please first name field!",
-      });
-      location.href = "#firstNameInp";
-    } else if (lastNameInp.value == "") {
-      removeLoader();
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Please last name field!",
-      });
-      location.href = "#lastNameInp";
-    } else if (emailInp.value == "") {
-      removeLoader();
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Please email field!",
-      });
-      location.href = "#emailInp";
-    } else if (passowrdInp.value == "") {
-      removeLoader();
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Please password field!",
-      });
-      location.href = "#passowrdInp";
-    } else if (confirmPasswordInp.value == "") {
-      removeLoader();
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Please confirm password field!",
-      });
-      location.href = "#confirmPasswordInp";
-    } else {
+    } 
+    // else if (firstNameInp.value == "") {
+    //   removeLoader();
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Error",
+    //     text: "Please first name field!",
+    //   });
+    //   location.href = "#firstNameInp";
+    // } else if (lastNameInp.value == "") {
+    //   removeLoader();
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Error",
+    //     text: "Please last name field!",
+    //   });
+    //   location.href = "#lastNameInp";
+    // } else if (emailInp.value == "") {
+    //   removeLoader();
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Error",
+    //     text: "Please email field!",
+    //   });
+    //   location.href = "#emailInp";
+    // } else if (passowrdInp.value == "") {
+    //   removeLoader();
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Error",
+    //     text: "Please password field!",
+    //   });
+    //   location.href = "#passowrdInp";
+    // } else if (confirmPasswordInp.value == "") {
+    //   removeLoader();
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Error",
+    //     text: "Please confirm password field!",
+    //   });
+    //   location.href = "#confirmPasswordInp";
+    // } 
+    else {
       if (confirmPasswordInp.value == passowrdInp.value) {
         const userData = {
           firstName: firstNameInp.value,
@@ -153,8 +155,6 @@ signupBtn &&
               userId: user.uid,
             });
             removeLoader();
-            flag = true;
-            location.href = "../user/dashboard.html";
           })
           .catch((error) => {
             removeLoader();
@@ -253,5 +253,6 @@ const logoutBtn = document.getElementById("logoutBtn");
 
 logoutBtn &&
   logoutBtn.addEventListener("click", () => {
+    displayLoader();
     signOut(auth).then(() => {});
   });

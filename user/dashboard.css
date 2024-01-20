@@ -256,6 +256,24 @@ body {
 
 /* end footerDiv */
 
+/* loaderDiv */
+.loaderDiv {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.504);
+}
+
+.loaderDiv img {
+    width: 300px;
+}
+
+/* end loaderDiv */
+
 @keyframes myAnim {
 	0% {
 		opacity: 0;
