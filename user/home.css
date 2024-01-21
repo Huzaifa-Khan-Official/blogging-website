@@ -72,23 +72,26 @@
 
 .imgDiv {
     border-radius: 10px;
-    width: 30%;
-    height: 150px;
+    padding: 20px 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    justify-content: center;
     position: relative;
+    background-color: #DEE2E6;
 }
 
 .imgDiv img {
     border-radius: 10px;
-    width: 100%;
+    width: 100px;
     height: 100%;
 }
 
 .uptIconDiv i {
     color: #7749F8;
     font-size: large;
-    position: absolute;
-    right: 6px;
-    bottom: 6px;
     padding: 10px;
     border: 2px solid white;
     border-radius: 50%;
@@ -187,6 +190,22 @@
 }
 
 /* end loaderDiv */
+
+@media (max-width: 768px) {
+    .imgDiv {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .imgDiv img {
+        width: 100px;
+    }
+
+    .uptIconDiv i {
+        right: 110px;
+    }
+}
 
 @media (max-width: 576px) {
     .formDiv {

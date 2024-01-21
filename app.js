@@ -37,12 +37,18 @@ const getUserData = async (id) => {
     // docSnap.data()
     if (location.pathname == "/user/home.html") {
       const userName = document.getElementById("userName");
+      const emailInpt = document.getElementById("emailInpt");
       const firstName = docSnap
         .data()
         .firstName.replace(/\s/g, "")
         .toUpperCase();
       const lastName = docSnap.data().lastName.replace(/\s/g, "").toUpperCase();
+      if (location.pathname == "/user/dashboard.html") {
+        
+      }
+      emailInpt.value = docSnap.data().email;
       userName.innerHTML = `${firstName} ${lastName}`;
+
       removeLoader();
     }
   } else {
