@@ -147,12 +147,27 @@ body {
 
 .contentDiv {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     gap: 20px;
 }
 
 .blogCardMainDiv {
     width: 100%;
+}
+
+.contentDiv .spinner-border {
+    width: 100px;
+    height: 100px;
+    margin: 20px auto;
+    position: relative;
+}
+
+.noBlogDiv {
+    text-align: center;
+    background-color: #FFF;
+    padding: 30px 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: none;
 }
 
 /* blogCardDiv */
@@ -279,15 +294,15 @@ body {
 /* end loaderDiv */
 
 @keyframes myAnim {
-	0% {
-		opacity: 0;
-		transform: translateY(-50px);
-	}
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
 
-	100% {
-		opacity: 1;
-		transform: translateY(0);
-	}
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @media (max-width: 576px) {

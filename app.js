@@ -13,7 +13,7 @@ import {
   getDoc,
   onSnapshot,
   query,
-  orderBy
+  orderBy,
 } from "./Firebase Configuration/config.js";
 
 const loaderDiv = document.querySelector(".loaderDiv");
@@ -160,12 +160,17 @@ pubBlgBtn &&
     displayLoader();
     const blogTitle = document.getElementById("blogTitle");
     const blogDesc = document.getElementById("blogDesc");
+    const time = new Date();
 
     const docRef = await addDoc(collection(db, `user/${userId}/blogs`), {
       title: blogTitle.value,
       description: blogDesc.value,
-      time: new Date(),
+      time: time,
     });
+
+    blogTitle.value = "";
+    blogDesc.value = "";
+
     removeLoader();
     Swal.fire({
       icon: "success",
@@ -185,14 +190,31 @@ blogDesc &&
   });
 
 const getAllBlogsOfCurrUser = (userId) => {
-  const q = query(collection(db, `user/${userId}/blogs`), orderBy("time","desc"));
+  blogCardMainDiv.innerHTML = "";
+  const spinnerBorder = document.querySelector(".spinner-border");
+  const noBlogDiv = document.querySelector(".noBlogDiv");
+
+
+  const q = query(
+    collection(db, `user/${userId}/blogs`),
+    orderBy("time", "desc")
+  );
 
   onSnapshot(q, (querySnapshot) => {
+    if (querySnapshot.size == 0) {
+      spinnerBorder.style.display = "none";
+      noBlogDiv.style.display = "block";
+    }
+
+    if (querySnapshot.size) {
+      spinnerBorder.style.display = "none";
+      noBlogDiv.style.display = "none";
+    }
+
     querySnapshot.docChanges().forEach((blog) => {
       if (blog.type === "removed") {
         console.log(blog.doc.id);
       } else if (blog.type === "added") {
-        console.log(blog.doc.data());
         const blogTitle = blog.doc.data().title;
         const blogDesc = blog.doc.data().description;
         const time = blog.doc.data().time;
@@ -211,7 +233,9 @@ const getAllBlogsOfCurrUser = (userId) => {
                                 </div>
                                 <div class="publishDetail">
                                     <h6>
-                                        Huzaifa Khan - ${moment(time).format("MMM Do YY")} (${moment(time).fromNow()})
+                                        Huzaifa Khan - ${time
+                                          .toDate()
+                                          .toDateString()}
                                     </h6>
                                 </div>
 
