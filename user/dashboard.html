@@ -24,7 +24,8 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link userName" aria-current="page" href="./home.html" id="userName">Huzaifa Khan</a>
+                            <a class="nav-link userName" aria-current="page" href="./home.html" id="userName">Huzaifa
+                                Khan</a>
                         </li>
                         <li class="nav-item">
                             <button class="nav-link" id="logoutBtn">Logout</button>
@@ -46,12 +47,11 @@
         <div class="formDiv">
             <div class="blogTitleDiv">
                 <label class="form-label">Blog Title:</label>
-                <input type="text" class="form-control" placeholder="Enter Blog Title">
-                <!-- <input type="text" name="" id="" class="form-control"> -->
+                <input type="text" class="form-control" placeholder="Enter Blog Title" id="blogTitle">
             </div>
             <div class="blogDescDiv">
                 <label class="form-label">Blog Description:</label>
-                <input type="text" class="form-control" placeholder="Enter Blog Description">
+                <input type="text" class="form-control" placeholder="Enter Blog Description" id="blogDesc">
             </div>
             <div class="publishBlogBtnDiv">
                 <button id="pubBlgBtn">Publish Blog</button>
@@ -68,107 +68,7 @@
         </div>
         <div class="contentDiv">
             <div class="blogCardMainDiv">
-                <!-- cardDiv -->
-                <div class="blogCardDiv">
-                    <div class="blogCard">
-                        <div class="blogDetailDiv">
-                            <div class="blogImg">
-                                <img src="../assets/user1Img.png" alt="">
-                            </div>
-                            <div class="blogDetail">
-                                <div class="blogTitle">
-                                    <h4>
-                                        Introducing Whisper
-                                    </h4>
-                                </div>
-                                <div class="publishDetail">
-                                    <h6>
-                                        Huzaifa Khan - August 17th, 2023
-                                    </h6>
-                                </div>
 
-                            </div>
-                        </div>
-
-                        <div class="blogDescDiv">
-                            <p>
-                                Whisper is an automatic speech recognition (ASR) system trained on 680,000 hours of
-                                multilingual
-                                and multitask supervised data collected from the web. We show that the use of such a
-                                large
-                                and
-                                diverse dataset leads to improved robustness to accents, background noise and technical
-                                language. Moreover, it enables transcription in multiple languages, as well as
-                                translation
-                                from
-                                those languages into English. We are open-sourcing models and inference code to serve as
-                                a
-                                foundation for building useful applications and for further research on robust speech
-                                processing.
-                            </p>
-                        </div>
-
-                        <div class="editDelBtnDiv">
-                            <button id="editBtn">
-                                Edit
-                            </button>
-                            <button id="delBtn">
-                                Delete
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- endCardDiv -->
-
-                <div class="blogCardDiv">
-                    <div class="blogCard">
-                        <div class="blogDetailDiv">
-                            <div class="blogImg">
-                                <img src="../assets/user2Img.jpg" alt="">
-                            </div>
-                            <div class="blogDetail">
-                                <div class="blogTitle">
-                                    <h4>
-                                        Introducing Whisper
-                                    </h4>
-                                </div>
-                                <div class="publishDetail">
-                                    <h6>
-                                        Muhammad Huzaifa - August 17th, 2023
-                                    </h6>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="blogDescDiv">
-                            <p>
-                                Whisper is an automatic speech recognition (ASR) system trained on 680,000 hours of
-                                multilingual
-                                and multitask supervised data collected from the web. We show that the use of such a
-                                large
-                                and
-                                diverse dataset leads to improved robustness to accents, background noise and technical
-                                language. Moreover, it enables transcription in multiple languages, as well as
-                                translation
-                                from
-                                those languages into English. We are open-sourcing models and inference code to serve as
-                                a
-                                foundation for building useful applications and for further research on robust speech
-                                processing.
-                            </p>
-                        </div>
-
-                        <div class="editDelBtnDiv">
-                            <button id="editBtn">
-                                Edit
-                            </button>
-                            <button id="delBtn">
-                                Delete
-                            </button>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -187,6 +87,7 @@
     <!-- javaScript Files -->
     <script type="module" src="../app.js"></script>
     <script src="navbar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <!-- sweet alert Link -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- jquery link -->

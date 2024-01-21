@@ -151,6 +151,10 @@ body {
     gap: 20px;
 }
 
+.blogCardMainDiv {
+    width: 100%;
+}
+
 /* blogCardDiv */
 .blogCardDiv {
     margin: 20px 0;

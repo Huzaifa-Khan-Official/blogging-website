@@ -11,9 +11,14 @@ import {
   signOut,
   signInWithEmailAndPassword,
   getDoc,
+  onSnapshot,
+  query,
+  orderBy
 } from "./Firebase Configuration/config.js";
 
 const loaderDiv = document.querySelector(".loaderDiv");
+
+let userId;
 
 function displayLoader() {
   loaderDiv.style.display = "flex";
@@ -43,12 +48,8 @@ const getUserData = async (id) => {
         .firstName.replace(/\s/g, "")
         .toUpperCase();
       const lastName = docSnap.data().lastName.replace(/\s/g, "").toUpperCase();
-      if (location.pathname == "/user/dashboard.html") {
-        
-      }
       emailInpt.value = docSnap.data().email;
       userName.innerHTML = `${firstName} ${lastName}`;
-
       removeLoader();
     }
   } else {
@@ -58,7 +59,9 @@ const getUserData = async (id) => {
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    getUserData(user.uid);
+    userId = user.uid;
+    getUserData(userId);
+    getAllBlogsOfCurrUser(userId);
     if (
       location.pathname !== "/user/dashboard.html" &&
       location.pathname !== "/user/home.html"
@@ -149,3 +152,90 @@ logoutBtn &&
     displayLoader();
     signOut(auth).then(() => {});
   });
+
+const pubBlgBtn = document.getElementById("pubBlgBtn");
+
+pubBlgBtn &&
+  pubBlgBtn.addEventListener("click", async () => {
+    displayLoader();
+    const blogTitle = document.getElementById("blogTitle");
+    const blogDesc = document.getElementById("blogDesc");
+
+    const docRef = await addDoc(collection(db, `user/${userId}/blogs`), {
+      title: blogTitle.value,
+      description: blogDesc.value,
+      time: new Date(),
+    });
+    removeLoader();
+    Swal.fire({
+      icon: "success",
+      title: "Congratulations",
+      text: "Blog published successfully!",
+    });
+  });
+
+const blogDesc = document.getElementById("blogDesc");
+const blogCardMainDiv = document.querySelector(".blogCardMainDiv");
+
+blogDesc &&
+  blogDesc.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      pubBlgBtn.click();
+    }
+  });
+
+const getAllBlogsOfCurrUser = (userId) => {
+  const q = query(collection(db, `user/${userId}/blogs`), orderBy("time","desc"));
+
+  onSnapshot(q, (querySnapshot) => {
+    querySnapshot.docChanges().forEach((blog) => {
+      if (blog.type === "removed") {
+        console.log(blog.doc.id);
+      } else if (blog.type === "added") {
+        console.log(blog.doc.data());
+        const blogTitle = blog.doc.data().title;
+        const blogDesc = blog.doc.data().description;
+        const time = blog.doc.data().time;
+        blogCardMainDiv.innerHTML += `
+        <div class="blogCardDiv">
+                    <div class="blogCard">
+                        <div class="blogDetailDiv">
+                            <div class="blogImg">
+                                <img src="../assets/user1Img.png" alt="">
+                            </div>
+                            <div class="blogDetail">
+                                <div class="blogTitle">
+                                    <h4>
+                                        ${blogTitle}
+                                    </h4>
+                                </div>
+                                <div class="publishDetail">
+                                    <h6>
+                                        Huzaifa Khan - ${moment(time).format("MMM Do YY")} (${moment(time).fromNow()})
+                                    </h6>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="blogDescDiv">
+                            <p>
+                            ${blogDesc}
+                            </p>
+                        </div>
+
+                        <div class="editDelBtnDiv">
+                            <button id="editBtn">
+                                Edit
+                            </button>
+                            <button id="delBtn">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+        `;
+      }
+    });
+  });
+};
