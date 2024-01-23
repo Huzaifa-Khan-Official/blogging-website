@@ -81,6 +81,36 @@
     </div>
     <!-- end allBlogsDiv -->
 
+    <!-- Modal -->
+    <div class="modal fade" id="editBlogModal" tabindex="-1" aria-labelledby="editBlogModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editBlogModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                        <div class="blogTitleDiv">
+                            <label class="form-label">Blog Title:</label>
+                            <input type="text" class="form-control" placeholder="Enter Blog Title" id="blogTitle">
+                        </div>
+                        <div class="blogDescDiv">
+                            <label class="form-label">Blog Description:</label>
+                            <input type="text" class="form-control" placeholder="Enter Blog Description" id="blogDesc">
+                        </div>
+                        
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                    <div class="publishBlogBtnDiv">
+                        <button id="pubBlgBtn">Publish Blog</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="footerDiv">
         <h6>Coded with <i class="fa-solid fa-heart" style="color: #ee1111;"></i> by <a
                 href="https://github.com/Huzaifa-Khan-Official">Huzaia Khan</a></h6>

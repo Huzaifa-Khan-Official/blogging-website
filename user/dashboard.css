@@ -293,6 +293,14 @@ body {
 
 /* end loaderDiv */
 
+/* modal  */
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+/* end modal */
+
 @keyframes myAnim {
     0% {
         opacity: 0;

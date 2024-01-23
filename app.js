@@ -217,7 +217,7 @@ const getAllBlogsOfCurrUser = (userId) => {
         dBlog.remove();
       } else if (blog.type === "modified") {
         const blogId = blog.doc.id;
-        const ModifiedBlog = document.getElementById(blogId);        
+        const ModifiedBlog = document.getElementById(blogId);
         const blogTitle = blog.doc.data().title;
         const blogDesc = blog.doc.data().description;
         const time = blog.doc.data().time;
@@ -252,8 +252,8 @@ const getAllBlogsOfCurrUser = (userId) => {
                         </div>
 
                         <div class="editDelBtnDiv">
-                            <button id="editBtn">
-                                Edit
+                            <button data-bs-toggle="modal" data-bs-target="#editBlogModal" onclick="delBLogFunc('${blogId}')">
+                            Edit
                             </button>
                             <button id="delBtn" onclick="delBLogFunc('${blogId}')">
                                 Delete
@@ -297,7 +297,7 @@ const getAllBlogsOfCurrUser = (userId) => {
                         </div>
 
                         <div class="editDelBtnDiv">
-                            <button id="editBtn">
+                            <button data-bs-toggle="modal" data-bs-target="#editBlogModal" onclick="updBLogFunc('${blogId}')">
                                 Edit
                             </button>
                             <button id="delBtn" onclick="delBLogFunc('${blogId}')">
@@ -314,4 +314,15 @@ const getAllBlogsOfCurrUser = (userId) => {
 
 window.delBLogFunc = async (id) => {
   await deleteDoc(doc(db, `user/${userId}/blogs`, id));
+};
+
+let updBlogId;
+window.updBLogFunc = async (id) => {
+  const blogRef = doc(db, `user/${userId}/blogs`, id);
+  updBlogId = id;
+  onSnapshot(blogRef, (selectBlog) => {
+    if (selectItem.exists()) {
+      
+    }
+  });
 };
