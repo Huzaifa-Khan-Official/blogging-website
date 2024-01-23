@@ -50,8 +50,10 @@
                 <input type="text" class="form-control" placeholder="Enter Blog Title" id="blogTitle">
             </div>
             <div class="blogDescDiv">
-                <label class="form-label">Blog Description:</label>
-                <input type="text" class="form-control" placeholder="Enter Blog Description" id="blogDesc">
+                <div class="form-floating">
+                    <textarea class="form-control" placeholder="Enter Blog Description" id="blogDesc"></textarea>
+                    <label for="blogDesc">Blog Description:</label>
+                </div>
             </div>
             <div class="publishBlogBtnDiv">
                 <button id="pubBlgBtn">Publish Blog</button>
@@ -90,21 +92,25 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                        <div class="blogTitleDiv">
-                            <label class="form-label">Blog Title:</label>
-                            <input type="text" class="form-control" placeholder="Enter Blog Title" id="blogTitle">
+                    <div class="blogTitleDiv">
+                        <label class="form-label">Blog Title:</label>
+                        <input type="text" class="form-control" placeholder="Edit Blog Title" id="uptBlogTitle">
+                    </div>
+                    <div class="blogDescDiv">
+                        <!-- <label class="form-label">Blog Description:</label>
+                        <input type="text" class="form-control" placeholder="Edit Blog Description" id="uptBlogDesc"> -->
+
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Edit Blog Description" id="uptBlogDesc"></textarea>
+                            <label for="uptBlogDesc">Blog Description:</label>
                         </div>
-                        <div class="blogDescDiv">
-                            <label class="form-label">Blog Description:</label>
-                            <input type="text" class="form-control" placeholder="Enter Blog Description" id="blogDesc">
-                        </div>
-                        
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                     <div class="publishBlogBtnDiv">
-                        <button id="pubBlgBtn">Publish Blog</button>
+                        <button id="updBlgBtn">Updata Blog</button>
                     </div>
                 </div>
             </div>

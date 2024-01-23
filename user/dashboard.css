@@ -114,6 +114,10 @@ body {
     align-items: center;
 }
 
+#uptBlogDesc, #blogDesc {
+    height: 100px !important;
+}
+
 .publishBlogBtnDiv button {
     color: white;
     border: none;

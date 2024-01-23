@@ -15,6 +15,7 @@ import {
   query,
   orderBy,
   deleteDoc,
+  updateDoc,
 } from "./Firebase Configuration/config.js";
 
 const loaderDiv = document.querySelector(".loaderDiv");
@@ -316,13 +317,64 @@ window.delBLogFunc = async (id) => {
   await deleteDoc(doc(db, `user/${userId}/blogs`, id));
 };
 
+const uptBlogTitle = document.getElementById("uptBlogTitle");
+const uptBlogDesc = document.getElementById("uptBlogDesc");
+const updBlgBtn = document.getElementById("updBlgBtn");
+
 let updBlogId;
 window.updBLogFunc = async (id) => {
   const blogRef = doc(db, `user/${userId}/blogs`, id);
   updBlogId = id;
   onSnapshot(blogRef, (selectBlog) => {
-    if (selectItem.exists()) {
-      
+    if (selectBlog.exists()) {
+      const EditBlogTitle = selectBlog.data().title;
+      const EditBlogDesc = selectBlog.data().description;
+
+      uptBlogTitle.value = EditBlogTitle;
+      uptBlogDesc.value = EditBlogDesc;
     }
   });
 };
+
+updBlgBtn &&
+  updBlgBtn.addEventListener("click", async () => {
+    try {
+      $("#editBlogModal").modal("hide");
+      displayLoader();
+      if (uptBlogTitle.value == "" || uptBlogDesc.value == "") {
+        removeLoader();
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Please fill all fields!",
+        });
+      } else {
+        const updBlogRef = doc(db, `user/${userId}/blogs`, updBlogId);
+        const time = new Date();
+
+        await updateDoc(updBlogRef, {
+          title: uptBlogTitle.value,
+          description: uptBlogDesc.value,
+          time: time,
+        });
+
+        $("#editBlogModal").modal("hide");
+        removeLoader();
+
+        uptBlogTitle.value = "";
+        uptBlogDesc.value = "";
+
+        Swal.fire({
+          icon: "success",
+          title: "Congratulations",
+          text: "Blog updated successfully!",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Something went wrong! Please try again later.",
+      });
+    }
+  });
