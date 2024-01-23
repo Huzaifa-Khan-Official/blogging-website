@@ -114,8 +114,12 @@ body {
     align-items: center;
 }
 
-#uptBlogDesc, #blogDesc {
+#blogDesc {
     height: 100px !important;
+}
+
+#uptBlogDesc {
+    height: 200px !important;
 }
 
 .publishBlogBtnDiv button {
