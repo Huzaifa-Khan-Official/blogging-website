@@ -66,7 +66,8 @@ onAuthStateChanged(auth, (user) => {
     getAllBlogsOfCurrUser(userId);
     if (
       location.pathname !== "/user/dashboard.html" &&
-      location.pathname !== "/user/home.html"
+      location.pathname !== "/user/home.html" &&
+      location.pathname !== "/user/index.html" 
     ) {
       location.href = "/user/dashboard.html";
     }
@@ -201,40 +202,41 @@ blogDesc &&
   });
 
 const getAllBlogsOfCurrUser = (userId) => {
-  blogCardMainDiv.innerHTML = "";
-  const spinnerBorder = document.querySelector(".spinner-border");
-  const noBlogDiv = document.querySelector(".noBlogDiv");
+  if (location.pathname == "/user/dashboard.html") {
+    blogCardMainDiv.innerHTML = "";
+    const spinnerBorder = document.querySelector(".spinner-border");
+    const noBlogDiv = document.querySelector(".noBlogDiv");
 
-  const q = query(
-    collection(db, `user/${userId}/blogs`),
-    orderBy("time", "desc")
-  );
+    const q = query(
+      collection(db, `user/${userId}/blogs`),
+      orderBy("time", "desc")
+    );
 
-  onSnapshot(q, (querySnapshot) => {
-    if (querySnapshot.size == 0) {
-      spinnerBorder.style.display = "none";
-      noBlogDiv.style.display = "block";
-    }
+    onSnapshot(q, (querySnapshot) => {
+      if (querySnapshot.size == 0) {
+        spinnerBorder.style.display = "none";
+        noBlogDiv.style.display = "block";
+      }
 
-    if (querySnapshot.size) {
-      spinnerBorder.style.display = "none";
-      noBlogDiv.style.display = "none";
-    }
+      if (querySnapshot.size) {
+        spinnerBorder.style.display = "none";
+        noBlogDiv.style.display = "none";
+      }
 
-    querySnapshot.docChanges().forEach((blog) => {
-      if (blog.type === "removed") {
-        const dBlog = document.getElementById(blog.doc.id);
-        dBlog.remove();
-      } else if (blog.type === "modified") {
-        const blogId = blog.doc.id;
-        const ModifiedBlog = document.getElementById(blogId);
-        const blogTitle = blog.doc.data().title;
-        const blogDesc = blog.doc.data().description;
-        const time = blog.doc.data().time;
+      querySnapshot.docChanges().forEach((blog) => {
+        if (blog.type === "removed") {
+          const dBlog = document.getElementById(blog.doc.id);
+          dBlog.remove();
+        } else if (blog.type === "modified") {
+          const blogId = blog.doc.id;
+          const ModifiedBlog = document.getElementById(blogId);
+          const blogTitle = blog.doc.data().title;
+          const blogDesc = blog.doc.data().description;
+          const time = blog.doc.data().time;
 
-        ModifiedBlog.setAttribute("id", blogId);
+          ModifiedBlog.setAttribute("id", blogId);
 
-        ModifiedBlog.innerHTML = `
+          ModifiedBlog.innerHTML = `
                     <div class="blogCard">
                         <div class="blogDetailDiv">
                             <div class="blogImg">
@@ -273,12 +275,12 @@ const getAllBlogsOfCurrUser = (userId) => {
                         </div>
                     </div>
                   `;
-      } else if (blog.type === "added") {
-        const blogId = blog.doc.id;
-        const blogTitle = blog.doc.data().title;
-        const blogDesc = blog.doc.data().description;
-        const time = blog.doc.data().time;
-        blogCardMainDiv.innerHTML += `
+        } else if (blog.type === "added") {
+          const blogId = blog.doc.id;
+          const blogTitle = blog.doc.data().title;
+          const blogDesc = blog.doc.data().description;
+          const time = blog.doc.data().time;
+          blogCardMainDiv.innerHTML += `
         <div class="blogCardDiv" id="${blog.doc.id}">
                     <div class="blogCard">
                         <div class="blogDetailDiv">
@@ -319,9 +321,10 @@ const getAllBlogsOfCurrUser = (userId) => {
                     </div>
                 </div>
         `;
-      }
+        }
+      });
     });
-  });
+  }
 };
 
 window.delBLogFunc = async (id) => {

@@ -39,14 +39,14 @@ body {
     background-color: #7749F8;
 }
 
-.userName {
+.userName, .userHome {
     border: 1px solid #7749F8;
     border-radius: 20px;
     padding: 5px 20px !important;
     transition: all .3s;
 }
 
-.userName:hover {
+.userName:hover, .userHome:hover {
     color: white;
     background-color: #7749F8;
 }
