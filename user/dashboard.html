@@ -50,10 +50,8 @@
                 <input type="text" class="form-control" placeholder="Enter Blog Title" id="blogTitle">
             </div>
             <div class="blogDescDiv">
-                <div class="form-floating">
-                    <textarea class="form-control" placeholder="Enter Blog Description" id="blogDesc"></textarea>
-                    <label for="blogDesc">Blog Description:</label>
-                </div>
+                <label for="blogDesc">Blog Description:</label>
+                <textarea class="form-control" placeholder="Enter Blog Description" id="blogDesc"></textarea>
             </div>
             <div class="publishBlogBtnDiv">
                 <button id="pubBlgBtn">Publish Blog</button>
@@ -84,8 +82,7 @@
     <!-- end allBlogsDiv -->
 
     <!-- Modal -->
-    <div class="modal fade" id="editBlogModal" tabindex="-1"
-        aria-labelledby="editBlogModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editBlogModal" tabindex="-1" aria-labelledby="editBlogModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -98,17 +95,11 @@
                         <input type="text" class="form-control" placeholder="Edit Blog Title" id="uptBlogTitle">
                     </div>
                     <div class="blogDescDiv">
-                        <!-- <label class="form-label">Blog Description:</label>
-                        <input type="text" class="form-control" placeholder="Edit Blog Description" id="uptBlogDesc"> -->
-
-                        <div class="form-floating">
-                            <textarea class="form-control" placeholder="Edit Blog Description"
-                                id="uptBlogDesc"></textarea>
-                            <label for="uptBlogDesc">Blog Description:</label>
-                        </div>
+                        <label for="uptBlogDesc">Blog Description:</label>
+                        <textarea class="form-control" placeholder="Edit Blog Description" id="uptBlogDesc"></textarea>
                     </div>
-
                 </div>
+                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <div class="publishBlogBtnDiv">

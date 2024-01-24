@@ -115,7 +115,8 @@ body {
 }
 
 #blogDesc {
-    height: 100px !important;
+    margin: 10px 0;
+    min-height: 200px !important;
 }
 
 #uptBlogDesc {

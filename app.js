@@ -164,21 +164,30 @@ pubBlgBtn &&
     const blogDesc = document.getElementById("blogDesc");
     const time = new Date();
 
-    const docRef = await addDoc(collection(db, `user/${userId}/blogs`), {
-      title: blogTitle.value,
-      description: blogDesc.value,
-      time: time,
-    });
+    if (blogTitle.value == "" || blogDesc.value == "") {
+      removeLoader();
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Please fill all fields!",
+      });
+    } else {
+      const docRef = await addDoc(collection(db, `user/${userId}/blogs`), {
+        title: blogTitle.value,
+        description: blogDesc.value,
+        time: time,
+      });
 
-    blogTitle.value = "";
-    blogDesc.value = "";
+      blogTitle.value = "";
+      blogDesc.value = "";
 
-    removeLoader();
-    Swal.fire({
-      icon: "success",
-      title: "Congratulations",
-      text: "Blog published successfully!",
-    });
+      removeLoader();
+      Swal.fire({
+        icon: "success",
+        title: "Congratulations",
+        text: "Blog published successfully!",
+      });
+    }
   });
 
 const blogDesc = document.getElementById("blogDesc");
@@ -223,8 +232,10 @@ const getAllBlogsOfCurrUser = (userId) => {
         const blogDesc = blog.doc.data().description;
         const time = blog.doc.data().time;
 
+        ModifiedBlog.setAttribute("id", blogId);
+
         ModifiedBlog.innerHTML = `
-        <div class="blogCard">
+                    <div class="blogCard">
                         <div class="blogDetailDiv">
                             <div class="blogImg">
                                 <img src="../assets/user1Img.png" alt="">
@@ -253,15 +264,15 @@ const getAllBlogsOfCurrUser = (userId) => {
                         </div>
 
                         <div class="editDelBtnDiv">
-                            <button data-bs-toggle="modal" data-bs-target="#editBlogModal" onclick="delBLogFunc('${blogId}')">
-                            Edit
+                            <button data-bs-toggle="modal" data-bs-target="#editBlogModal" onclick="updBLogFunc('${blogId}')">
+                                Edit
                             </button>
                             <button id="delBtn" onclick="delBLogFunc('${blogId}')">
                                 Delete
                             </button>
                         </div>
                     </div>
-        `;
+                  `;
       } else if (blog.type === "added") {
         const blogId = blog.doc.id;
         const blogTitle = blog.doc.data().title;
