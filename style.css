@@ -149,6 +149,27 @@
     line-height: 28px;
 }
 
+.noBlogDiv {
+    text-align: center;
+    background-color: #FFF;
+    padding: 30px 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: none;
+}
+
+.contentDiv {
+    display: flex;
+    flex-direction: column;
+    /* gap: 20px; */
+}
+
+.contentDiv .spinner-border {
+    width: 100px;
+    height: 100px;
+    margin: 20px auto;
+    position: relative;
+}
+
 /* end blogCardDiv */
 
 /* end allBlogDiv */

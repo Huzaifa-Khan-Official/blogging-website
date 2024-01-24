@@ -67,7 +67,7 @@ onAuthStateChanged(auth, (user) => {
     if (
       location.pathname !== "/user/dashboard.html" &&
       location.pathname !== "/user/home.html" &&
-      location.pathname !== "/user/index.html" 
+      location.pathname !== "/user/index.html"
     ) {
       location.href = "/user/dashboard.html";
     }
@@ -392,3 +392,251 @@ updBlgBtn &&
       });
     }
   });
+
+const getAllBlogs = () => {
+  if (location.pathname == "/user/index.html") {
+    blogCardMainDiv.innerHTML = "";
+
+    const spinnerBorder = document.querySelector(".spinner-border");
+    const noBlogDiv = document.querySelector(".noBlogDiv");
+
+    const q = collection(db, `user`);
+
+    onSnapshot(q, (querySnapshot) => {
+      querySnapshot.docChanges().forEach((currUser) => {
+        const userId = currUser.doc.data().userId;
+
+        const q = query(
+          collection(db, `user/${userId}/blogs`),
+          orderBy("time", "desc")
+        );
+
+        onSnapshot(q, (querySnapshot) => {
+          if (querySnapshot.size == 0) {
+            spinnerBorder.style.display = "none";
+            noBlogDiv.style.display = "block";
+          }
+
+          if (querySnapshot.size) {
+            spinnerBorder.style.display = "none";
+            noBlogDiv.style.display = "none";
+          }
+
+          querySnapshot.docChanges().forEach((blog) => {
+            if (blog.type === "removed") {
+              const dBlog = document.getElementById(blog.doc.id);
+              dBlog.remove();
+            } else if (blog.type === "modified") {
+              const blogId = blog.doc.id;
+              const ModifiedBlog = document.getElementById(blogId);
+              const blogTitle = blog.doc.data().title;
+              const blogDesc = blog.doc.data().description;
+              const time = blog.doc.data().time;
+
+              ModifiedBlog.setAttribute("id", blogId);
+
+              ModifiedBlog.innerHTML = `
+                        <div class="blogCard">
+                            <div class="blogDetailDiv">
+                                <div class="blogImg">
+                                    <img src="../assets/user1Img.png" alt="">
+                                </div>
+                                <div class="blogDetail">
+                                    <div class="blogTitle">
+                                        <h4>
+                                            ${blogTitle}
+                                        </h4>
+                                    </div>
+                                    <div class="publishDetail">
+                                        <h6>
+                                            Huzaifa Khan - ${time
+                                              .toDate()
+                                              .toDateString()}
+                                        </h6>
+                                    </div>
+    
+                                </div>
+                            </div>
+    
+                            <div class="blogDescDiv">
+                                <p>
+                                ${blogDesc}
+                                </p>
+                            </div>
+    
+                            <div class="allFromThisUserDiv">
+                              <a href="./allBlogs.html">see all from this user</a>
+                            </div>
+                        </div>
+                      `;
+            } else if (blog.type === "added") {
+              const blogId = blog.doc.id;
+              const blogTitle = blog.doc.data().title;
+              const blogDesc = blog.doc.data().description;
+              const time = blog.doc.data().time;
+              blogCardMainDiv.innerHTML += `
+            <div class="blogCardDiv" id="${blog.doc.id}">
+                        <div class="blogCard">
+                            <div class="blogDetailDiv">
+                                <div class="blogImg">
+                                    <img src="../assets/user1Img.png" alt="">
+                                </div>
+                                <div class="blogDetail">
+                                    <div class="blogTitle">
+                                        <h4>
+                                            ${blogTitle}
+                                        </h4>
+                                    </div>
+                                    <div class="publishDetail">
+                                        <h6>
+                                            Huzaifa Khan - ${time
+                                              .toDate()
+                                              .toDateString()}
+                                        </h6>
+                                    </div>
+    
+                                </div>
+                            </div>
+    
+                            <div class="blogDescDiv">
+                                <p>
+                                ${blogDesc}
+                                </p>
+                            </div>
+    
+                            <div class="allFromThisUserDiv">
+                                <a href="./allBlogs.html">see all from this user</a>
+                            </div>
+                        </div>
+                    </div>
+            `;
+            }
+          });
+        });
+      });
+    });
+  } else if (location.pathname == "/index.html") {
+    blogCardMainDiv.innerHTML = "";
+
+    const spinnerBorder = document.querySelector(".spinner-border");
+    const noBlogDiv = document.querySelector(".noBlogDiv");
+
+    const q = collection(db, `user`);
+
+    onSnapshot(q, (querySnapshot) => {
+      querySnapshot.docChanges().forEach((currUser) => {
+        const userId = currUser.doc.data().userId;
+
+        const q = query(
+          collection(db, `user/${userId}/blogs`),
+          orderBy("time", "desc")
+        );
+
+        onSnapshot(q, (querySnapshot) => {
+          if (querySnapshot.size == 0) {
+            spinnerBorder.style.display = "none";
+            noBlogDiv.style.display = "block";
+          }
+
+          if (querySnapshot.size) {
+            spinnerBorder.style.display = "none";
+            noBlogDiv.style.display = "none";
+          }
+
+          querySnapshot.docChanges().forEach((blog) => {
+            if (blog.type === "removed") {
+              const dBlog = document.getElementById(blog.doc.id);
+              dBlog.remove();
+            } else if (blog.type === "modified") {
+              const blogId = blog.doc.id;
+              const ModifiedBlog = document.getElementById(blogId);
+              const blogTitle = blog.doc.data().title;
+              const blogDesc = blog.doc.data().description;
+              const time = blog.doc.data().time;
+
+              ModifiedBlog.setAttribute("id", blogId);
+
+              ModifiedBlog.innerHTML = `
+                        <div class="blogCard">
+                            <div class="blogDetailDiv">
+                                <div class="blogImg">
+                                    <img src="../assets/user1Img.png" alt="">
+                                </div>
+                                <div class="blogDetail">
+                                    <div class="blogTitle">
+                                        <h4>
+                                            ${blogTitle}
+                                        </h4>
+                                    </div>
+                                    <div class="publishDetail">
+                                        <h6>
+                                            Huzaifa Khan - ${time
+                                              .toDate()
+                                              .toDateString()}
+                                        </h6>
+                                    </div>
+    
+                                </div>
+                            </div>
+    
+                            <div class="blogDescDiv">
+                                <p>
+                                ${blogDesc}
+                                </p>
+                            </div>
+    
+                            <div class="allFromThisUserDiv">
+                              <a href="./allBlogs.html">see all from this user</a>
+                            </div>
+                        </div>
+                      `;
+            } else if (blog.type === "added") {
+              const blogId = blog.doc.id;
+              const blogTitle = blog.doc.data().title;
+              const blogDesc = blog.doc.data().description;
+              const time = blog.doc.data().time;
+              blogCardMainDiv.innerHTML += `
+            <div class="blogCardDiv" id="${blog.doc.id}">
+                        <div class="blogCard">
+                            <div class="blogDetailDiv">
+                                <div class="blogImg">
+                                    <img src="../assets/user1Img.png" alt="">
+                                </div>
+                                <div class="blogDetail">
+                                    <div class="blogTitle">
+                                        <h4>
+                                            ${blogTitle}
+                                        </h4>
+                                    </div>
+                                    <div class="publishDetail">
+                                        <h6>
+                                            Huzaifa Khan - ${time
+                                              .toDate()
+                                              .toDateString()}
+                                        </h6>
+                                    </div>
+    
+                                </div>
+                            </div>
+    
+                            <div class="blogDescDiv">
+                                <p>
+                                ${blogDesc}
+                                </p>
+                            </div>
+    
+                            <div class="allFromThisUserDiv">
+                                <a href="./allBlogs.html">see all from this user</a>
+                            </div>
+                        </div>
+                    </div>
+            `;
+            }
+          });
+        });
+      });
+    });
+  }
+};
+
+getAllBlogs();

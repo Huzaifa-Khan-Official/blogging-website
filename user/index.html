@@ -27,11 +27,22 @@
             <div class="listDiv">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link loginBtn" aria-current="page" href="./Login/login.html" >Login</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link signupBtn" aria-current="page" href="./SignUp/signup.html">Signup</a>
+                        </li> -->
+
+                        <li class="nav-item">
+                            <a class="nav-link userName" aria-current="page" href="./home.html" id="userName">Huzaifa
+                                Khan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link userHome" aria-current="page" href="./index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" id="logoutBtn">Logout</button>
                         </li>
                     </ul>
                 </div>
@@ -49,93 +60,32 @@
         <div class="allBlogHeadingDiv">
             <h3>All Blogs</h3>
         </div>
+        <div class="contentDiv">
+            <div class="blogCardMainDiv">
 
-        <!-- cardDiv -->
-        <div class="blogCardDiv">
-            <div class="blogCard">
-                <div class="blogDetailDiv">
-                    <div class="blogImg">
-                        <img src="../assets/user1Img.png" alt="">
-                    </div>
-                    <div class="blogDetail">
-                        <div class="blogTitle">
-                            <h4>
-                                Introducing Whisper
-                            </h4>
-                        </div>
-                        <div class="publishDetail">
-                            <h6>
-                                Huzaifa Khan - August 17th, 2023
-                            </h6>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="blogDescDiv">
-                    <p>
-                        Whisper is an automatic speech recognition (ASR) system trained on 680,000 hours of multilingual
-                        and multitask supervised data collected from the web. We show that the use of such a large and
-                        diverse dataset leads to improved robustness to accents, background noise and technical
-                        language. Moreover, it enables transcription in multiple languages, as well as translation from
-                        those languages into English. We are open-sourcing models and inference code to serve as a
-                        foundation for building useful applications and for further research on robust speech
-                        processing.
-                    </p>
-                </div>
-
-                <div class="allFromThisUserDiv">
-                    <a href="./allBlogs.html">see all from this user</a>
-                </div>
             </div>
-        </div>
-        <!-- endCardDiv -->
 
-        <div class="blogCardDiv">
-            <div class="blogCard">
-                <div class="blogDetailDiv">
-                    <div class="blogImg">
-                        <img src="../assets/user2Img.jpg" alt="">
-                    </div>
-                    <div class="blogDetail">
-                        <div class="blogTitle">
-                            <h4>
-                                Introducing Whisper
-                            </h4>
-                        </div>
-                        <div class="publishDetail">
-                            <h6>
-                                Muhammad Huzaifa - August 17th, 2023
-                            </h6>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="blogDescDiv">
-                    <p>
-                        Whisper is an automatic speech recognition (ASR) system trained on 680,000 hours of multilingual
-                        and multitask supervised data collected from the web. We show that the use of such a large and
-                        diverse dataset leads to improved robustness to accents, background noise and technical
-                        language. Moreover, it enables transcription in multiple languages, as well as translation from
-                        those languages into English. We are open-sourcing models and inference code to serve as a
-                        foundation for building useful applications and for further research on robust speech
-                        processing.
-                    </p>
-                </div>
-
-                <div class="allFromThisUserDiv">
-                    <a href="#">see all from this user</a>
-                </div>
+            <div class="noBlogDiv">
+                <h2>You don't have any blog yet!</h2>
+            </div>
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
             </div>
         </div>
     </div>
     <!-- end allBlogsDiv -->
 
     <div class="footerDiv">
-        <h6>Coded with <i class="fa-solid fa-heart" style="color: #ee1111;"></i> by <a href="https://github.com/Huzaifa-Khan-Official">Huzaia Khan</a></h6>
+        <h6>Coded with <i class="fa-solid fa-heart" style="color: #ee1111;"></i> by <a
+                href="https://github.com/Huzaifa-Khan-Official">Huzaia Khan</a></h6>
     </div>
 
+
+    <!-- loaderDiv -->
+    <div class="loaderDiv">
+        <img src="../assets/loader.gif" alt="">
+    </div>
+    <!-- end loaderDiv -->
 
     <!-- javaScript Files -->
     <script type="module" src="../app.js"></script>
