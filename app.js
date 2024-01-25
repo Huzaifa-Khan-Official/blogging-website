@@ -153,7 +153,7 @@ const logoutBtn = document.getElementById("logoutBtn");
 logoutBtn &&
   logoutBtn.addEventListener("click", () => {
     displayLoader();
-    signOut(auth).then(() => {});
+    signOut(auth).then(() => { });
   });
 
 const pubBlgBtn = document.getElementById("pubBlgBtn");
@@ -251,8 +251,8 @@ const getAllBlogsOfCurrUser = (userId) => {
                                 <div class="publishDetail">
                                     <h6>
                                         Huzaifa Khan - ${time
-                                          .toDate()
-                                          .toDateString()}
+              .toDate()
+              .toDateString()}
                                     </h6>
                                 </div>
 
@@ -296,8 +296,8 @@ const getAllBlogsOfCurrUser = (userId) => {
                                 <div class="publishDetail">
                                     <h6>
                                         Huzaifa Khan - ${time
-                                          .toDate()
-                                          .toDateString()}
+              .toDate()
+              .toDateString()}
                                     </h6>
                                 </div>
 
@@ -406,6 +406,19 @@ const getAllBlogs = () => {
       querySnapshot.docChanges().forEach((currUser) => {
         const userId = currUser.doc.data().userId;
 
+        const firstName = currUser.doc
+          .data()
+          .firstName.replace(/\s/g, "")
+          .toUpperCase();
+        const lastName = currUser.doc
+          .data()
+          .lastName.replace(/\s/g, "")
+          .toUpperCase();
+
+        console.log(firstName, lastName);
+
+        const userName = `${firstName} ${lastName}`;
+
         const q = query(
           collection(db, `user/${userId}/blogs`),
           orderBy("time", "desc")
@@ -449,9 +462,9 @@ const getAllBlogs = () => {
                                     </div>
                                     <div class="publishDetail">
                                         <h6>
-                                            Huzaifa Khan - ${time
-                                              .toDate()
-                                              .toDateString()}
+                                            ${userName} - ${time
+                  .toDate()
+                  .toDateString()}
                                         </h6>
                                     </div>
     
@@ -465,7 +478,9 @@ const getAllBlogs = () => {
                             </div>
     
                             <div class="allFromThisUserDiv">
-                              <a href="./allBlogs.html">see all from this user</a>
+                              <button id="seeAllBlogBtn"  onclick="seeAllBlogsOfUser('${userId}')">
+                              see all from this user
+                               </button>
                             </div>
                         </div>
                       `;
@@ -489,9 +504,9 @@ const getAllBlogs = () => {
                                     </div>
                                     <div class="publishDetail">
                                         <h6>
-                                            Huzaifa Khan - ${time
-                                              .toDate()
-                                              .toDateString()}
+                                            ${userName} - ${time
+                  .toDate()
+                  .toDateString()}
                                         </h6>
                                     </div>
     
@@ -505,7 +520,9 @@ const getAllBlogs = () => {
                             </div>
     
                             <div class="allFromThisUserDiv">
-                                <a href="./allBlogs.html">see all from this user</a>
+                                <button id="seeAllBlogBtn"  onclick="seeAllBlogsOfUser('${userId}')">
+                              see all from this user
+                               </button>
                             </div>
                         </div>
                     </div>
@@ -527,6 +544,17 @@ const getAllBlogs = () => {
       querySnapshot.docChanges().forEach((currUser) => {
         const userId = currUser.doc.data().userId;
 
+        const firstName = currUser.doc
+          .data()
+          .firstName.replace(/\s/g, "")
+          .toUpperCase();
+        const lastName = currUser.doc
+          .data()
+          .lastName.replace(/\s/g, "")
+          .toUpperCase();
+
+        const userName = `${firstName} ${lastName}`;
+
         const q = query(
           collection(db, `user/${userId}/blogs`),
           orderBy("time", "desc")
@@ -570,9 +598,9 @@ const getAllBlogs = () => {
                                     </div>
                                     <div class="publishDetail">
                                         <h6>
-                                            Huzaifa Khan - ${time
-                                              .toDate()
-                                              .toDateString()}
+                                          ${userName} - ${time
+                  .toDate()
+                  .toDateString()}
                                         </h6>
                                     </div>
     
@@ -585,8 +613,10 @@ const getAllBlogs = () => {
                                 </p>
                             </div>
     
-                            <div class="allFromThisUserDiv">
-                              <a href="./allBlogs.html">see all from this user</a>
+                            <div class="allFromThisUserDiv">                            
+                            <button id="seeAllBlogBtn"  onclick="seeAllBlogsOfUser('${userId}')">
+                            see all from this user
+                             </button>
                             </div>
                         </div>
                       `;
@@ -610,9 +640,9 @@ const getAllBlogs = () => {
                                     </div>
                                     <div class="publishDetail">
                                         <h6>
-                                            Huzaifa Khan - ${time
-                                              .toDate()
-                                              .toDateString()}
+                                          ${userName} - ${time
+                  .toDate()
+                  .toDateString()}
                                         </h6>
                                     </div>
     
@@ -626,7 +656,9 @@ const getAllBlogs = () => {
                             </div>
     
                             <div class="allFromThisUserDiv">
-                                <a href="./allBlogs.html">see all from this user</a>
+                              <button id="seeAllBlogBtn"  onclick="seeAllBlogsOfUser('${userId}')">
+                              see all from this user
+                               </button>
                             </div>
                         </div>
                     </div>
@@ -640,3 +672,7 @@ const getAllBlogs = () => {
 };
 
 getAllBlogs();
+
+window.seeAllBlogsOfUser = (id) => {
+  console.log(id);
+}

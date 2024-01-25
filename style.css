@@ -140,13 +140,20 @@
     line-height: 28px;
 }
 
-.allFromThisUserDiv a {
+.allFromThisUserDiv button {
     color: #7749F8;
     font-family: Inter;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: 28px;
+    background-color: transparent;
+    border: none;
+}
+
+.allFromThisUserDiv button:hover {
+    text-decoration: underline;
+    transition: all .3s;
 }
 
 .noBlogDiv {
