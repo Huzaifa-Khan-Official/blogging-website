@@ -201,6 +201,19 @@
 
 
 @media (max-width: 576px) {
+    .navbar {
+        padding: 10px 20px;
+    }
+
+    .listDiv {
+        width: 100%;
+    }
+
+    .navbar-collapse.show {
+        margin: 20px 0;
+        display: flex;
+    }
+    
     .allBlogDiv {
         padding: 40px 20px;
     }

@@ -153,7 +153,7 @@ const logoutBtn = document.getElementById("logoutBtn");
 logoutBtn &&
   logoutBtn.addEventListener("click", () => {
     displayLoader();
-    signOut(auth).then(() => { });
+    signOut(auth).then(() => {});
   });
 
 const pubBlgBtn = document.getElementById("pubBlgBtn");
@@ -251,8 +251,8 @@ const getAllBlogsOfCurrUser = (userId) => {
                                 <div class="publishDetail">
                                     <h6>
                                         Huzaifa Khan - ${time
-              .toDate()
-              .toDateString()}
+                                          .toDate()
+                                          .toDateString()}
                                     </h6>
                                 </div>
 
@@ -296,8 +296,8 @@ const getAllBlogsOfCurrUser = (userId) => {
                                 <div class="publishDetail">
                                     <h6>
                                         Huzaifa Khan - ${time
-              .toDate()
-              .toDateString()}
+                                          .toDate()
+                                          .toDateString()}
                                     </h6>
                                 </div>
 
@@ -463,8 +463,8 @@ const getAllBlogs = () => {
                                     <div class="publishDetail">
                                         <h6>
                                             ${userName} - ${time
-                  .toDate()
-                  .toDateString()}
+                .toDate()
+                .toDateString()}
                                         </h6>
                                     </div>
     
@@ -505,8 +505,8 @@ const getAllBlogs = () => {
                                     <div class="publishDetail">
                                         <h6>
                                             ${userName} - ${time
-                  .toDate()
-                  .toDateString()}
+                .toDate()
+                .toDateString()}
                                         </h6>
                                     </div>
     
@@ -599,8 +599,8 @@ const getAllBlogs = () => {
                                     <div class="publishDetail">
                                         <h6>
                                           ${userName} - ${time
-                  .toDate()
-                  .toDateString()}
+                .toDate()
+                .toDateString()}
                                         </h6>
                                     </div>
     
@@ -641,8 +641,8 @@ const getAllBlogs = () => {
                                     <div class="publishDetail">
                                         <h6>
                                           ${userName} - ${time
-                  .toDate()
-                  .toDateString()}
+                .toDate()
+                .toDateString()}
                                         </h6>
                                     </div>
     
@@ -671,8 +671,20 @@ const getAllBlogs = () => {
   }
 };
 
-getAllBlogs();
+if (location.pathname == "/index.html" || location.pathname == "/user/index.html") {
+  getAllBlogs();
+}
 
+let idOfSelectedUser;
 window.seeAllBlogsOfUser = (id) => {
-  console.log(id);
+  idOfSelectedUser = id;
+  location.href = "/allBlogs.html"
+};
+
+const getAllBlogsOfSelctedUser = () => {
+  console.log(idOfSelectedUser);
+};
+
+if (location.pathname == "/allBlogs.html") {
+  getAllBlogsOfSelctedUser()
 }
