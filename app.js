@@ -41,17 +41,18 @@ const getUserData = async (id) => {
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    // docSnap.data()
     if (location.pathname == "/user/home.html") {
-      const userName = document.getElementById("userName");
+      const userNameInp = document.getElementById("userNameInp");
       const emailInpt = document.getElementById("emailInpt");
+      const userId = document.getElementById("userId");
       const firstName = docSnap
         .data()
         .firstName.replace(/\s/g, "")
         .toUpperCase();
       const lastName = docSnap.data().lastName.replace(/\s/g, "").toUpperCase();
       emailInpt.value = docSnap.data().email;
-      userName.innerHTML = `${firstName} ${lastName}`;
+      userId.value = docSnap.id;
+      userNameInp.value = `${firstName} ${lastName}`;
       removeLoader();
     }
   } else {
@@ -153,7 +154,7 @@ const logoutBtn = document.getElementById("logoutBtn");
 logoutBtn &&
   logoutBtn.addEventListener("click", () => {
     displayLoader();
-    signOut(auth).then(() => {});
+    signOut(auth).then(() => { });
   });
 
 const pubBlgBtn = document.getElementById("pubBlgBtn");
@@ -251,8 +252,8 @@ const getAllBlogsOfCurrUser = (userId) => {
                                 <div class="publishDetail">
                                     <h6>
                                         Huzaifa Khan - ${time
-                                          .toDate()
-                                          .toDateString()}
+              .toDate()
+              .toDateString()}
                                     </h6>
                                 </div>
 
@@ -296,8 +297,8 @@ const getAllBlogsOfCurrUser = (userId) => {
                                 <div class="publishDetail">
                                     <h6>
                                         Huzaifa Khan - ${time
-                                          .toDate()
-                                          .toDateString()}
+              .toDate()
+              .toDateString()}
                                     </h6>
                                 </div>
 
@@ -463,8 +464,8 @@ const getAllBlogs = () => {
                                     <div class="publishDetail">
                                         <h6>
                                             ${userName} - ${time
-                .toDate()
-                .toDateString()}
+                  .toDate()
+                  .toDateString()}
                                         </h6>
                                     </div>
     
@@ -505,8 +506,8 @@ const getAllBlogs = () => {
                                     <div class="publishDetail">
                                         <h6>
                                             ${userName} - ${time
-                .toDate()
-                .toDateString()}
+                  .toDate()
+                  .toDateString()}
                                         </h6>
                                     </div>
     
@@ -599,8 +600,8 @@ const getAllBlogs = () => {
                                     <div class="publishDetail">
                                         <h6>
                                           ${userName} - ${time
-                .toDate()
-                .toDateString()}
+                  .toDate()
+                  .toDateString()}
                                         </h6>
                                     </div>
     
@@ -641,8 +642,8 @@ const getAllBlogs = () => {
                                     <div class="publishDetail">
                                         <h6>
                                           ${userName} - ${time
-                .toDate()
-                .toDateString()}
+                  .toDate()
+                  .toDateString()}
                                         </h6>
                                     </div>
     
@@ -688,3 +689,23 @@ const getAllBlogsOfSelctedUser = () => {
 if (location.pathname == "/allBlogs.html") {
   getAllBlogsOfSelctedUser()
 }
+
+const uptBtn = document.getElementById("uptBtn");
+
+uptBtn && uptBtn.addEventListener("click", async () => {
+  const userNameInp = document.getElementById("userNameInp");
+  const emailInpt = document.getElementById("emailInpt");
+  const userId = document.getElementById("userId");
+
+
+  const updBlogRef = doc(db, `user/${userId}/blogs`, updBlogId);
+  const time = new Date();
+
+  await updateDoc(updBlogRef, {
+    title: uptBlogTitle.value,
+    description: uptBlogDesc.value,
+    time: time,
+  });
+
+  console.log(userNameInp.value, emailInpt.value, userId.value);
+})
