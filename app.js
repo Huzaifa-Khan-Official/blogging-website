@@ -50,6 +50,11 @@ const getUserData = async (id) => {
       userId.value = docSnap.id;
       userNameInp.value = docSnap.data().name.toUpperCase();
       removeLoader();
+    } else if (location.pathname == "/user/dashboard.html" || location.pathname == "/user/index.html") {
+      const userName = document.getElementById("userName");
+      displayLoader()
+      userName.innerHTML = docSnap.data().name.toUpperCase();
+      removeLoader();
     }
   } else {
     console.log("No such document!");
@@ -200,16 +205,6 @@ blogDesc &&
 
 const getAllBlogsOfCurrUser = async (userId) => {
   if (location.pathname == "/user/dashboard.html") {
-    const docRef = doc(db, "user", userId);
-    const docSnap = await getDoc(docRef);
-    const userName = document.getElementById("userName");    
-
-    if (docSnap.exists()) {
-      displayLoader()
-      userName.innerHTML = docSnap.data().name.toUpperCase();
-      removeLoader();
-    }
-
     blogCardMainDiv.innerHTML = "";
     const spinnerBorder = document.querySelector(".spinner-border");
     const noBlogDiv = document.querySelector(".noBlogDiv");
@@ -405,26 +400,13 @@ const getAllBlogs = () => {
     blogCardMainDiv.innerHTML = "";
 
     const spinnerBorder = document.querySelector(".spinner-border");
-    const noBlogDiv = document.querySelector(".noBlogDiv");
 
     const q = collection(db, `user`);
 
     onSnapshot(q, (querySnapshot) => {
       querySnapshot.docChanges().forEach((currUser) => {
         const userId = currUser.doc.data().userId;
-
-        // const firstName = currUser.doc
-        //   .data()
-        //   .firstName.replace(/\s/g, "")
-        //   .toUpperCase();
-        // const lastName = currUser.doc
-        //   .data()
-        //   .lastName.replace(/\s/g, "")
-        //   .toUpperCase();
-
-        // console.log(firstName, lastName);
-
-        const userName = docSnap.data().name.toUpperCase();
+        const userName = currUser.doc.data().name;
 
         const q = query(
           collection(db, `user/${userId}/blogs`),
@@ -434,12 +416,10 @@ const getAllBlogs = () => {
         onSnapshot(q, (querySnapshot) => {
           if (querySnapshot.size == 0) {
             spinnerBorder.style.display = "none";
-            noBlogDiv.style.display = "block";
           }
 
           if (querySnapshot.size) {
             spinnerBorder.style.display = "none";
-            noBlogDiv.style.display = "none";
           }
 
           querySnapshot.docChanges().forEach((blog) => {
@@ -550,15 +530,6 @@ const getAllBlogs = () => {
     onSnapshot(q, (querySnapshot) => {
       querySnapshot.docChanges().forEach((currUser) => {
         const userId = currUser.doc.data().userId;
-
-        // const firstName = currUser.doc
-        //   .data()
-        //   .firstName.replace(/\s/g, "")
-        //   .toUpperCase();
-        // const lastName = currUser.doc
-        //   .data()
-        //   .lastName.replace(/\s/g, "")
-        //   .toUpperCase();
 
         const userName = docSnap.data().name.toUpperCase();
 
@@ -706,7 +677,7 @@ uptBtn && uptBtn.addEventListener("click", async () => {
   const userRef = doc(db, `user/${userId.value}`);
 
   await updateDoc(userRef, {
-    name: userNameInp.value
+    name: userNameInp.value.toUpperCase()
   });
 
   removeLoader();
@@ -716,4 +687,5 @@ uptBtn && uptBtn.addEventListener("click", async () => {
     title: "Congratulations",
     text: "Profile updated successfully!",
   });
+  userNameInp.value = userNameInp.value.toUpperCase();
 })
