@@ -45,14 +45,10 @@ const getUserData = async (id) => {
       const userNameInp = document.getElementById("userNameInp");
       const emailInpt = document.getElementById("emailInpt");
       const userId = document.getElementById("userId");
-      const firstName = docSnap
-        .data()
-        .firstName.replace(/\s/g, "")
-        .toUpperCase();
-      const lastName = docSnap.data().lastName.replace(/\s/g, "").toUpperCase();
+
       emailInpt.value = docSnap.data().email;
       userId.value = docSnap.id;
-      userNameInp.value = `${firstName} ${lastName}`;
+      userNameInp.value = docSnap.data().name.toUpperCase();
       removeLoader();
     }
   } else {
@@ -202,8 +198,18 @@ blogDesc &&
     }
   });
 
-const getAllBlogsOfCurrUser = (userId) => {
+const getAllBlogsOfCurrUser = async (userId) => {
   if (location.pathname == "/user/dashboard.html") {
+    const docRef = doc(db, "user", userId);
+    const docSnap = await getDoc(docRef);
+    const userName = document.getElementById("userName");    
+
+    if (docSnap.exists()) {
+      displayLoader()
+      userName.innerHTML = docSnap.data().name.toUpperCase();
+      removeLoader();
+    }
+
     blogCardMainDiv.innerHTML = "";
     const spinnerBorder = document.querySelector(".spinner-border");
     const noBlogDiv = document.querySelector(".noBlogDiv");
@@ -407,18 +413,18 @@ const getAllBlogs = () => {
       querySnapshot.docChanges().forEach((currUser) => {
         const userId = currUser.doc.data().userId;
 
-        const firstName = currUser.doc
-          .data()
-          .firstName.replace(/\s/g, "")
-          .toUpperCase();
-        const lastName = currUser.doc
-          .data()
-          .lastName.replace(/\s/g, "")
-          .toUpperCase();
+        // const firstName = currUser.doc
+        //   .data()
+        //   .firstName.replace(/\s/g, "")
+        //   .toUpperCase();
+        // const lastName = currUser.doc
+        //   .data()
+        //   .lastName.replace(/\s/g, "")
+        //   .toUpperCase();
 
-        console.log(firstName, lastName);
+        // console.log(firstName, lastName);
 
-        const userName = `${firstName} ${lastName}`;
+        const userName = docSnap.data().name.toUpperCase();
 
         const q = query(
           collection(db, `user/${userId}/blogs`),
@@ -545,16 +551,16 @@ const getAllBlogs = () => {
       querySnapshot.docChanges().forEach((currUser) => {
         const userId = currUser.doc.data().userId;
 
-        const firstName = currUser.doc
-          .data()
-          .firstName.replace(/\s/g, "")
-          .toUpperCase();
-        const lastName = currUser.doc
-          .data()
-          .lastName.replace(/\s/g, "")
-          .toUpperCase();
+        // const firstName = currUser.doc
+        //   .data()
+        //   .firstName.replace(/\s/g, "")
+        //   .toUpperCase();
+        // const lastName = currUser.doc
+        //   .data()
+        //   .lastName.replace(/\s/g, "")
+        //   .toUpperCase();
 
-        const userName = `${firstName} ${lastName}`;
+        const userName = docSnap.data().name.toUpperCase();
 
         const q = query(
           collection(db, `user/${userId}/blogs`),
@@ -693,19 +699,21 @@ if (location.pathname == "/allBlogs.html") {
 const uptBtn = document.getElementById("uptBtn");
 
 uptBtn && uptBtn.addEventListener("click", async () => {
+  displayLoader()
   const userNameInp = document.getElementById("userNameInp");
-  const emailInpt = document.getElementById("emailInpt");
   const userId = document.getElementById("userId");
 
+  const userRef = doc(db, `user/${userId.value}`);
 
-  const updBlogRef = doc(db, `user/${userId}/blogs`, updBlogId);
-  const time = new Date();
-
-  await updateDoc(updBlogRef, {
-    title: uptBlogTitle.value,
-    description: uptBlogDesc.value,
-    time: time,
+  await updateDoc(userRef, {
+    name: userNameInp.value
   });
 
-  console.log(userNameInp.value, emailInpt.value, userId.value);
+  removeLoader();
+
+  Swal.fire({
+    icon: "success",
+    title: "Congratulations",
+    text: "Profile updated successfully!",
+  });
 })

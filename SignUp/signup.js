@@ -60,9 +60,12 @@ signupBtn.addEventListener("click", () => {
     });
   } else {
     if (confirmPasswordInp.value == passowrdInp.value) {
+      const firstName = firstNameInp.value.toUpperCase();
+      const lastName = lastNameInp.value.toUpperCase();
+      const name = `${firstName} ${lastName}`;
+
       const userData = {
-        firstName: firstNameInp.value,
-        lastName: lastNameInp.value,
+        name: name,
         email: emailInp.value,
         password: passowrdInp.value,
       };
