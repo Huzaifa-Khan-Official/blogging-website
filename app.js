@@ -53,8 +53,10 @@ const getUserData = async (id) => {
       const emailInpt = document.getElementById("emailInpt");
       const userId = document.getElementById("userId");
 
-      
-      userImg.src = docSnap.data().image;
+
+      if (docSnap.data().image) {
+        userImg.src = docSnap.data().image;
+      }
       emailInpt.value = docSnap.data().email;
       userId.value = docSnap.id;
       userNameInp.value = docSnap.data().name.toUpperCase();
@@ -723,15 +725,17 @@ uptBtn && uptBtn.addEventListener("click", async () => {
     const userNameInp = document.getElementById("userNameInp");
     const userId = document.getElementById("userId");
 
+    const user = {
+      name: userNameInp.value.toUpperCase()
+    }
+
+    if (userImgInp.files[0]) {
+      user.image = await downloadImageUrl(userImgInp.files[0]);
+    }
+
     const userRef = doc(db, `user/${userId.value}`);
 
-    const userImgUrl =await downloadImageUrl(userImgInp.files[0]);
-
-
-    await updateDoc(userRef, {
-      name: userNameInp.value.toUpperCase(),
-      image: userImgUrl
-    });
+    await updateDoc(userRef, user);
 
     removeLoader();
 
