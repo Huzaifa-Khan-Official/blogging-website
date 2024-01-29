@@ -16,9 +16,16 @@ import {
   orderBy,
   deleteDoc,
   updateDoc,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  storage,
 } from "./Firebase Configuration/config.js";
 
 const loaderDiv = document.querySelector(".loaderDiv");
+const userImg = document.getElementById("userImg");
+
 
 let userId;
 
@@ -46,6 +53,8 @@ const getUserData = async (id) => {
       const emailInpt = document.getElementById("emailInpt");
       const userId = document.getElementById("userId");
 
+      
+      userImg.src = docSnap.data().image;
       emailInpt.value = docSnap.data().email;
       userId.value = docSnap.id;
       userNameInp.value = docSnap.data().name.toUpperCase();
@@ -668,38 +677,86 @@ if (location.pathname == "/allBlogs.html") {
 }
 
 const uptBtn = document.getElementById("uptBtn");
+const userImgInp = document.getElementById("userImgInp");
+
+const downloadImageUrl = (file) => {
+  return new Promise((resolve, reject) => {
+    const userImgRef = ref(
+      storage,
+      // storage location
+      `usersImages/`
+    );
+    const uploadTask = uploadBytesResumable(userImgRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        switch (snapshot.state) {
+          case "paused":
+            break;
+          case "running":
+            break;
+        }
+      },
+      (error) => {
+        reject(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref)
+          .then((downloadURL) => {
+            resolve(downloadURL);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      }
+    );
+  });
+};
+
 
 uptBtn && uptBtn.addEventListener("click", async () => {
-  displayLoader()
-  const userNameInp = document.getElementById("userNameInp");
-  const userId = document.getElementById("userId");
+  try {
+    displayLoader()
+    const userNameInp = document.getElementById("userNameInp");
+    const userId = document.getElementById("userId");
 
-  const userRef = doc(db, `user/${userId.value}`);
+    const userRef = doc(db, `user/${userId.value}`);
 
-  await updateDoc(userRef, {
-    name: userNameInp.value.toUpperCase()
-  });
+    const userImgUrl =await downloadImageUrl(userImgInp.files[0]);
 
-  removeLoader();
 
-  Swal.fire({
-    icon: "success",
-    title: "Congratulations",
-    text: "Profile updated successfully!",
-  });
-  userNameInp.value = userNameInp.value.toUpperCase();
+    await updateDoc(userRef, {
+      name: userNameInp.value.toUpperCase(),
+      image: userImgUrl
+    });
+
+    removeLoader();
+
+    Swal.fire({
+      icon: "success",
+      title: "Congratulations",
+      text: "Profile updated successfully!",
+    });
+    userNameInp.value = userNameInp.value.toUpperCase();
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Error!",
+      text: error.message,
+    });
+  }
 })
 
 
 const uptIconDiv = document.querySelector(".uptIconDiv");
-const userImgInp = document.getElementById("userImgInp");
 
 userImgInp && userImgInp.addEventListener("change", (e) => {
-  const userImg = document.getElementById("userImg");
-
   const file = e.target.files[0];
   userImg.src = URL.createObjectURL(file);
-  
+
 })
 
 uptIconDiv && uptIconDiv.addEventListener("click", () => {
