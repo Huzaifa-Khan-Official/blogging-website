@@ -689,3 +689,19 @@ uptBtn && uptBtn.addEventListener("click", async () => {
   });
   userNameInp.value = userNameInp.value.toUpperCase();
 })
+
+
+const uptIconDiv = document.querySelector(".uptIconDiv");
+const userImgInp = document.getElementById("userImgInp");
+
+userImgInp && userImgInp.addEventListener("change", (e) => {
+  const userImg = document.getElementById("userImg");
+
+  const file = e.target.files[0];
+  userImg.src = URL.createObjectURL(file);
+  
+})
+
+uptIconDiv && uptIconDiv.addEventListener("click", () => {
+  userImgInp.click();
+})
