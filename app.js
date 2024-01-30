@@ -21,6 +21,8 @@ import {
   uploadBytesResumable,
   getDownloadURL,
   storage,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
 } from "./Firebase Configuration/config.js";
 
 const loaderDiv = document.querySelector(".loaderDiv");
@@ -721,30 +723,41 @@ const downloadImageUrl = (file) => {
 
 uptBtn && uptBtn.addEventListener("click", async () => {
   try {
-    displayLoader()
-    const userNameInp = document.getElementById("userNameInp");
-    const userId = document.getElementById("userId");
 
-    const user = {
-      name: userNameInp.value.toUpperCase()
-    }
-
-    if (userImgInp.files[0]) {
-      user.image = await downloadImageUrl(userImgInp.files[0]);
-    }
-
-    const userRef = doc(db, `user/${userId.value}`);
-
-    await updateDoc(userRef, user);
-
-    removeLoader();
-
-    Swal.fire({
-      icon: "success",
-      title: "Congratulations",
-      text: "Profile updated successfully!",
+    const currentUser = auth.currentUser;
+    const oldPassword = document.getElementById("oldPassword");
+    const credential = EmailAuthProvider.credential(currentUser.email, oldPassword.value);
+    reauthenticateWithCredential(currentUser, credential).then(() => {
+      console.log(currentUser);
+    }).catch((error) => {
+      console.log(error);
     });
-    userNameInp.value = userNameInp.value.toUpperCase();
+
+
+    // displayLoader()
+    // const userNameInp = document.getElementById("userNameInp");
+    // const userId = document.getElementById("userId");
+
+    // const user = {
+    //   name: userNameInp.value.toUpperCase()
+    // }
+
+    // if (userImgInp.files[0]) {
+    //   user.image = await downloadImageUrl(userImgInp.files[0]);
+    // }
+
+    // const userRef = doc(db, `user/${userId.value}`);
+
+    // await updateDoc(userRef, user);
+
+    // removeLoader();
+
+    // Swal.fire({
+    //   icon: "success",
+    //   title: "Congratulations",
+    //   text: "Profile updated successfully!",
+    // });
+    // userNameInp.value = userNameInp.value.toUpperCase();
   } catch (error) {
     Swal.fire({
       icon: "error",
