@@ -23,6 +23,7 @@ import {
   storage,
   reauthenticateWithCredential,
   EmailAuthProvider,
+  updatePassword
 } from "./Firebase Configuration/config.js";
 
 const loaderDiv = document.querySelector(".loaderDiv");
@@ -222,6 +223,11 @@ const getAllBlogsOfCurrUser = async (userId) => {
     const spinnerBorder = document.querySelector(".spinner-border");
     const noBlogDiv = document.querySelector(".noBlogDiv");
 
+    let imageUrl;
+    const unsub = onSnapshot(doc(db, "user", userId), (doc) => {
+      imageUrl = doc.data().image;
+    });
+
     const q = query(
       collection(db, `user/${userId}/blogs`),
       orderBy("time", "desc")
@@ -255,7 +261,7 @@ const getAllBlogsOfCurrUser = async (userId) => {
                     <div class="blogCard">
                         <div class="blogDetailDiv">
                             <div class="blogImg">
-                                <img src="../assets/user1Img.png" alt="">
+                                <img src=${imageUrl ? imageUrl : "../assets/userIcon.png"} alt="">
                             </div>
                             <div class="blogDetail">
                                 <div class="blogTitle">
@@ -300,7 +306,7 @@ const getAllBlogsOfCurrUser = async (userId) => {
                     <div class="blogCard">
                         <div class="blogDetailDiv">
                             <div class="blogImg">
-                                <img src="../assets/user1Img.png" alt="">
+                                <img src=${imageUrl ? imageUrl : "../assets/userIcon.png"} alt="">
                             </div>
                             <div class="blogDetail">
                                 <div class="blogTitle">
@@ -420,6 +426,13 @@ const getAllBlogs = () => {
       querySnapshot.docChanges().forEach((currUser) => {
         const userId = currUser.doc.data().userId;
         const userName = currUser.doc.data().name;
+
+        let imageUrl;
+        const unsub = onSnapshot(collection(db, "user"), (snapshot) => {
+          snapshot.docChanges().forEach((doc) => { 
+            console.log(doc);
+          })
+        });
 
         const q = query(
           collection(db, `user/${userId}/blogs`),
@@ -720,45 +733,63 @@ const downloadImageUrl = (file) => {
   });
 };
 
+const updatePasswordFunc = (oldPassword, newPassword) => {
+  return new Promise((resolve, reject) => {
+    const currentUser = auth.currentUser;
+    const credential = EmailAuthProvider.credential(currentUser.email, oldPassword);
+    reauthenticateWithCredential(currentUser, credential).then(() => {
+      updatePassword(currentUser, newPassword).then((res) => {
+        resolve(res);
+      }).catch((error) => {
+        reject(error)
+      });
+    }).catch((error) => {
+      reject(error)
+    });
+  })
+}
 
 uptBtn && uptBtn.addEventListener("click", async () => {
   try {
+    displayLoader()
 
-    const currentUser = auth.currentUser;
     const oldPassword = document.getElementById("oldPassword");
-    const credential = EmailAuthProvider.credential(currentUser.email, oldPassword.value);
-    reauthenticateWithCredential(currentUser, credential).then(() => {
-      console.log(currentUser);
-    }).catch((error) => {
-      console.log(error);
+    const newPassword = document.getElementById("newPassword");
+
+    if (oldPassword.value && newPassword.value) {
+      await updatePasswordFunc(oldPassword.value, newPassword.value)
+    }
+
+
+    const userNameInp = document.getElementById("userNameInp");
+    const userId = document.getElementById("userId");
+
+    const user = {
+      name: userNameInp.value.toUpperCase()
+    }
+
+    if (userImgInp.files[0]) {
+      user.image = await downloadImageUrl(userImgInp.files[0]);
+    }
+
+    const userRef = doc(db, `user/${userId.value}`);
+
+    await updateDoc(userRef, user);
+
+    removeLoader();
+
+    Swal.fire({
+      icon: "success",
+      title: "Congratulations",
+      text: "Profile updated successfully!",
     });
-
-
-    // displayLoader()
-    // const userNameInp = document.getElementById("userNameInp");
-    // const userId = document.getElementById("userId");
-
-    // const user = {
-    //   name: userNameInp.value.toUpperCase()
-    // }
-
-    // if (userImgInp.files[0]) {
-    //   user.image = await downloadImageUrl(userImgInp.files[0]);
-    // }
-
-    // const userRef = doc(db, `user/${userId.value}`);
-
-    // await updateDoc(userRef, user);
-
-    // removeLoader();
-
-    // Swal.fire({
-    //   icon: "success",
-    //   title: "Congratulations",
-    //   text: "Profile updated successfully!",
-    // });
-    // userNameInp.value = userNameInp.value.toUpperCase();
+    userNameInp.value = userNameInp.value.toUpperCase();
+    oldPassword.value = ""
+    newPassword.value = ""
   } catch (error) {
+    removeLoader();
+    oldPassword.value = ""
+    newPassword.value = ""
     Swal.fire({
       icon: "error",
       title: "Error!",

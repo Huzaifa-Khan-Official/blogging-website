@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword,
-reauthenticateWithCredential, EmailAuthProvider  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+reauthenticateWithCredential, EmailAuthProvider, updatePassword  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, collection, addDoc, setDoc, doc, getDoc, serverTimestamp, onSnapshot, query, orderBy, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import {
   getStorage,
@@ -28,11 +28,5 @@ const db = getFirestore(app);
 const storage = getStorage();
 
 export {
-  app, auth, createUserWithEmailAndPassword, db, collection, addDoc, setDoc, onAuthStateChanged, signOut, signInWithEmailAndPassword, doc, getDoc, serverTimestamp, onSnapshot, query, orderBy, deleteDoc, updateDoc, getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-  storage,
-  reauthenticateWithCredential,
-  EmailAuthProvider
+  app, auth, createUserWithEmailAndPassword, db, collection, addDoc, setDoc, onAuthStateChanged, signOut, signInWithEmailAndPassword, doc, getDoc, serverTimestamp, onSnapshot, query, orderBy, deleteDoc, updateDoc, getStorage, ref, uploadBytesResumable, getDownloadURL, storage, reauthenticateWithCredential, EmailAuthProvider, updatePassword
 }
