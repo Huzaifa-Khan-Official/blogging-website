@@ -418,21 +418,22 @@ const getAllBlogs = () => {
   if (location.pathname == "/user/index.html") {
     blogCardMainDiv.innerHTML = "";
 
+
+
     const spinnerBorder = document.querySelector(".spinner-border");
 
     const q = collection(db, `user`);
 
     onSnapshot(q, (querySnapshot) => {
+      let imageUrl;
+      const unsub = onSnapshot(collection(db, "user"), (snapshot) => {
+        snapshot.docChanges().forEach((doc) => {
+          imageUrl = doc.doc.data().image;
+        })
+      });
       querySnapshot.docChanges().forEach((currUser) => {
         const userId = currUser.doc.data().userId;
         const userName = currUser.doc.data().name;
-
-        let imageUrl;
-        const unsub = onSnapshot(collection(db, "user"), (snapshot) => {
-          snapshot.docChanges().forEach((doc) => { 
-            console.log(doc);
-          })
-        });
 
         const q = query(
           collection(db, `user/${userId}/blogs`),
@@ -465,7 +466,7 @@ const getAllBlogs = () => {
                         <div class="blogCard">
                             <div class="blogDetailDiv">
                                 <div class="blogImg">
-                                    <img src="../assets/user1Img.png" alt="">
+                                    <img src=${imageUrl ? imageUrl : "../assets/userIcon.png"} alt="">
                                 </div>
                                 <div class="blogDetail">
                                     <div class="blogTitle">
@@ -502,12 +503,13 @@ const getAllBlogs = () => {
               const blogTitle = blog.doc.data().title;
               const blogDesc = blog.doc.data().description;
               const time = blog.doc.data().time;
+              console.log(imageUrl);
               blogCardMainDiv.innerHTML += `
             <div class="blogCardDiv" id="${blog.doc.id}">
                         <div class="blogCard">
                             <div class="blogDetailDiv">
                                 <div class="blogImg">
-                                    <img src="../assets/user1Img.png" alt="">
+                                    <img src=${imageUrl ? imageUrl : "../assets/userIcon.png"} alt="">
                                 </div>
                                 <div class="blogDetail">
                                     <div class="blogTitle">
