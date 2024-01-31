@@ -23,12 +23,11 @@ import {
   storage,
   reauthenticateWithCredential,
   EmailAuthProvider,
-  updatePassword
+  updatePassword,
 } from "./Firebase Configuration/config.js";
 
 const loaderDiv = document.querySelector(".loaderDiv");
 const userImg = document.getElementById("userImg");
-
 
 let userId;
 
@@ -56,7 +55,6 @@ const getUserData = async (id) => {
       const emailInpt = document.getElementById("emailInpt");
       const userId = document.getElementById("userId");
 
-
       if (docSnap.data().image) {
         userImg.src = docSnap.data().image;
       }
@@ -64,9 +62,12 @@ const getUserData = async (id) => {
       userId.value = docSnap.id;
       userNameInp.value = docSnap.data().name.toUpperCase();
       removeLoader();
-    } else if (location.pathname == "/user/dashboard.html" || location.pathname == "/user/index.html") {
+    } else if (
+      location.pathname == "/user/dashboard.html" ||
+      location.pathname == "/user/index.html"
+    ) {
       const userName = document.getElementById("userName");
-      displayLoader()
+      displayLoader();
       userName.innerHTML = docSnap.data().name.toUpperCase();
       removeLoader();
     }
@@ -169,7 +170,7 @@ const logoutBtn = document.getElementById("logoutBtn");
 logoutBtn &&
   logoutBtn.addEventListener("click", () => {
     displayLoader();
-    signOut(auth).then(() => { });
+    signOut(auth).then(() => {});
   });
 
 const pubBlgBtn = document.getElementById("pubBlgBtn");
@@ -261,7 +262,9 @@ const getAllBlogsOfCurrUser = async (userId) => {
                     <div class="blogCard">
                         <div class="blogDetailDiv">
                             <div class="blogImg">
-                                <img src=${imageUrl ? imageUrl : "../assets/userIcon.png"} alt="">
+                                <img src=${
+                                  imageUrl ? imageUrl : "../assets/userIcon.png"
+                                } alt="">
                             </div>
                             <div class="blogDetail">
                                 <div class="blogTitle">
@@ -272,8 +275,8 @@ const getAllBlogsOfCurrUser = async (userId) => {
                                 <div class="publishDetail">
                                     <h6>
                                         Huzaifa Khan - ${time
-              .toDate()
-              .toDateString()}
+                                          .toDate()
+                                          .toDateString()}
                                     </h6>
                                 </div>
 
@@ -306,7 +309,9 @@ const getAllBlogsOfCurrUser = async (userId) => {
                     <div class="blogCard">
                         <div class="blogDetailDiv">
                             <div class="blogImg">
-                                <img src=${imageUrl ? imageUrl : "../assets/userIcon.png"} alt="">
+                                <img src=${
+                                  imageUrl ? imageUrl : "../assets/userIcon.png"
+                                } alt="">
                             </div>
                             <div class="blogDetail">
                                 <div class="blogTitle">
@@ -317,8 +322,8 @@ const getAllBlogsOfCurrUser = async (userId) => {
                                 <div class="publishDetail">
                                     <h6>
                                         Huzaifa Khan - ${time
-              .toDate()
-              .toDateString()}
+                                          .toDate()
+                                          .toDateString()}
                                     </h6>
                                 </div>
 
@@ -418,22 +423,18 @@ const getAllBlogs = () => {
   if (location.pathname == "/user/index.html") {
     blogCardMainDiv.innerHTML = "";
 
-
-
     const spinnerBorder = document.querySelector(".spinner-border");
 
     const q = collection(db, `user`);
 
     onSnapshot(q, (querySnapshot) => {
-      let imageUrl;
-      const unsub = onSnapshot(collection(db, "user"), (snapshot) => {
-        snapshot.docChanges().forEach((doc) => {
-          imageUrl = doc.doc.data().image;
-        })
-      });
-      querySnapshot.docChanges().forEach((currUser) => {
+      querySnapshot.docChanges().forEach(async (currUser) => {
         const userId = currUser.doc.data().userId;
         const userName = currUser.doc.data().name;
+
+        let imageUrl;
+
+        imageUrl = currUser.doc.data().image;
 
         const q = query(
           collection(db, `user/${userId}/blogs`),
@@ -466,7 +467,11 @@ const getAllBlogs = () => {
                         <div class="blogCard">
                             <div class="blogDetailDiv">
                                 <div class="blogImg">
-                                    <img src=${imageUrl ? imageUrl : "../assets/userIcon.png"} alt="">
+                                    <img src=${
+                                      imageUrl
+                                        ? imageUrl
+                                        : "../assets/userIcon.png"
+                                    } alt="">
                                 </div>
                                 <div class="blogDetail">
                                     <div class="blogTitle">
@@ -477,8 +482,8 @@ const getAllBlogs = () => {
                                     <div class="publishDetail">
                                         <h6>
                                             ${userName} - ${time
-                  .toDate()
-                  .toDateString()}
+                .toDate()
+                .toDateString()}
                                         </h6>
                                     </div>
     
@@ -503,13 +508,16 @@ const getAllBlogs = () => {
               const blogTitle = blog.doc.data().title;
               const blogDesc = blog.doc.data().description;
               const time = blog.doc.data().time;
-              console.log(imageUrl);
               blogCardMainDiv.innerHTML += `
             <div class="blogCardDiv" id="${blog.doc.id}">
                         <div class="blogCard">
                             <div class="blogDetailDiv">
                                 <div class="blogImg">
-                                    <img src=${imageUrl ? imageUrl : "../assets/userIcon.png"} alt="">
+                                    <img src=${
+                                      imageUrl
+                                        ? imageUrl 
+                                        : "../assets/userIcon.png"
+                                    } alt="">
                                 </div>
                                 <div class="blogDetail">
                                     <div class="blogTitle">
@@ -520,8 +528,8 @@ const getAllBlogs = () => {
                                     <div class="publishDetail">
                                         <h6>
                                             ${userName} - ${time
-                  .toDate()
-                  .toDateString()}
+                .toDate()
+                .toDateString()}
                                         </h6>
                                     </div>
     
@@ -558,8 +566,11 @@ const getAllBlogs = () => {
     onSnapshot(q, (querySnapshot) => {
       querySnapshot.docChanges().forEach((currUser) => {
         const userId = currUser.doc.data().userId;
+        const userName = currUser.doc.data().name.toUpperCase();
 
-        const userName = docSnap.data().name.toUpperCase();
+        let imageUrl;
+
+        imageUrl = currUser.doc.data().image;
 
         const q = query(
           collection(db, `user/${userId}/blogs`),
@@ -594,7 +605,11 @@ const getAllBlogs = () => {
                         <div class="blogCard">
                             <div class="blogDetailDiv">
                                 <div class="blogImg">
-                                    <img src="../assets/user1Img.png" alt="">
+                                    <img src=${
+                                      imageUrl
+                                        ? imageUrl 
+                                        : "../assets/userIcon.png"
+                                    } alt="">
                                 </div>
                                 <div class="blogDetail">
                                     <div class="blogTitle">
@@ -605,8 +620,8 @@ const getAllBlogs = () => {
                                     <div class="publishDetail">
                                         <h6>
                                           ${userName} - ${time
-                  .toDate()
-                  .toDateString()}
+                .toDate()
+                .toDateString()}
                                         </h6>
                                     </div>
     
@@ -636,7 +651,11 @@ const getAllBlogs = () => {
                         <div class="blogCard">
                             <div class="blogDetailDiv">
                                 <div class="blogImg">
-                                    <img src="../assets/user1Img.png" alt="">
+                                    <img src=${
+                                      imageUrl
+                                        ? imageUrl 
+                                        : "../assets/userIcon.png"
+                                    } alt="">
                                 </div>
                                 <div class="blogDetail">
                                     <div class="blogTitle">
@@ -647,8 +666,8 @@ const getAllBlogs = () => {
                                     <div class="publishDetail">
                                         <h6>
                                           ${userName} - ${time
-                  .toDate()
-                  .toDateString()}
+                .toDate()
+                .toDateString()}
                                         </h6>
                                     </div>
     
@@ -677,14 +696,17 @@ const getAllBlogs = () => {
   }
 };
 
-if (location.pathname == "/index.html" || location.pathname == "/user/index.html") {
+if (
+  location.pathname == "/index.html" ||
+  location.pathname == "/user/index.html"
+) {
   getAllBlogs();
 }
 
 let idOfSelectedUser;
 window.seeAllBlogsOfUser = (id) => {
   idOfSelectedUser = id;
-  location.href = "/allBlogs.html"
+  location.href = "/allBlogs.html";
 };
 
 const getAllBlogsOfSelctedUser = () => {
@@ -692,7 +714,7 @@ const getAllBlogsOfSelctedUser = () => {
 };
 
 if (location.pathname == "/allBlogs.html") {
-  getAllBlogsOfSelctedUser()
+  getAllBlogsOfSelctedUser();
 }
 
 const uptBtn = document.getElementById("uptBtn");
@@ -738,77 +760,84 @@ const downloadImageUrl = (file) => {
 const updatePasswordFunc = (oldPassword, newPassword) => {
   return new Promise((resolve, reject) => {
     const currentUser = auth.currentUser;
-    const credential = EmailAuthProvider.credential(currentUser.email, oldPassword);
-    reauthenticateWithCredential(currentUser, credential).then(() => {
-      updatePassword(currentUser, newPassword).then((res) => {
-        resolve(res);
-      }).catch((error) => {
-        reject(error)
+    const credential = EmailAuthProvider.credential(
+      currentUser.email,
+      oldPassword
+    );
+    reauthenticateWithCredential(currentUser, credential)
+      .then(() => {
+        updatePassword(currentUser, newPassword)
+          .then((res) => {
+            resolve(res);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      })
+      .catch((error) => {
+        reject(error);
       });
-    }).catch((error) => {
-      reject(error)
-    });
-  })
-}
+  });
+};
 
-uptBtn && uptBtn.addEventListener("click", async () => {
-  try {
-    displayLoader()
+uptBtn &&
+  uptBtn.addEventListener("click", async () => {
+    try {
+      displayLoader();
 
-    const oldPassword = document.getElementById("oldPassword");
-    const newPassword = document.getElementById("newPassword");
+      const oldPassword = document.getElementById("oldPassword");
+      const newPassword = document.getElementById("newPassword");
 
-    if (oldPassword.value && newPassword.value) {
-      await updatePasswordFunc(oldPassword.value, newPassword.value)
+      if (oldPassword.value && newPassword.value) {
+        await updatePasswordFunc(oldPassword.value, newPassword.value);
+      }
+
+      const userNameInp = document.getElementById("userNameInp");
+      const userId = document.getElementById("userId");
+
+      const user = {
+        name: userNameInp.value.toUpperCase(),
+      };
+
+      if (userImgInp.files[0]) {
+        user.image = await downloadImageUrl(userImgInp.files[0]);
+      }
+
+      const userRef = doc(db, `user/${userId.value}`);
+
+      await updateDoc(userRef, user);
+
+      removeLoader();
+
+      Swal.fire({
+        icon: "success",
+        title: "Congratulations",
+        text: "Profile updated successfully!",
+      });
+      userNameInp.value = userNameInp.value.toUpperCase();
+      oldPassword.value = "";
+      newPassword.value = "";
+    } catch (error) {
+      removeLoader();
+      oldPassword.value = "";
+      newPassword.value = "";
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: error.message,
+      });
     }
-
-
-    const userNameInp = document.getElementById("userNameInp");
-    const userId = document.getElementById("userId");
-
-    const user = {
-      name: userNameInp.value.toUpperCase()
-    }
-
-    if (userImgInp.files[0]) {
-      user.image = await downloadImageUrl(userImgInp.files[0]);
-    }
-
-    const userRef = doc(db, `user/${userId.value}`);
-
-    await updateDoc(userRef, user);
-
-    removeLoader();
-
-    Swal.fire({
-      icon: "success",
-      title: "Congratulations",
-      text: "Profile updated successfully!",
-    });
-    userNameInp.value = userNameInp.value.toUpperCase();
-    oldPassword.value = ""
-    newPassword.value = ""
-  } catch (error) {
-    removeLoader();
-    oldPassword.value = ""
-    newPassword.value = ""
-    Swal.fire({
-      icon: "error",
-      title: "Error!",
-      text: error.message,
-    });
-  }
-})
-
+  });
 
 const uptIconDiv = document.querySelector(".uptIconDiv");
 
-userImgInp && userImgInp.addEventListener("change", (e) => {
-  const file = e.target.files[0];
-  userImg.src = URL.createObjectURL(file);
+userImgInp &&
+  userImgInp.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    userImg.src = URL.createObjectURL(file);
+  });
 
-})
-
-uptIconDiv && uptIconDiv.addEventListener("click", () => {
-  userImgInp.click();
-})
+uptIconDiv &&
+  uptIconDiv.addEventListener("click", () => {
+    userImgInp.click();
+  });
