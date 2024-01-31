@@ -28,6 +28,7 @@ import {
 
 const loaderDiv = document.querySelector(".loaderDiv");
 const userImg = document.getElementById("userImg");
+const userEmail = document.getElementById("userEmail");
 
 let userId;
 
@@ -84,7 +85,8 @@ onAuthStateChanged(auth, (user) => {
     if (
       location.pathname !== "/user/dashboard.html" &&
       location.pathname !== "/user/home.html" &&
-      location.pathname !== "/user/index.html"
+      location.pathname !== "/user/index.html" &&
+      location.pathname !== "/user/allBlogs.html"
     ) {
       location.href = "/user/dashboard.html";
     }
@@ -494,7 +496,7 @@ const getAllBlogs = () => {
                             </div>
     
                             <div class="allFromThisUserDiv">
-                              <a href="./allBlogs.html?userId=${blogId}">see all from this user</a>                              
+                              <a href="./allBlogs.html?userId=${userId}">see all from this user</a>                              
                             </div>
                         </div>
                       `;
@@ -537,7 +539,7 @@ const getAllBlogs = () => {
                             </div>
     
                             <div class="allFromThisUserDiv">
-                              <a href="./allBlogs.html?userId=${blogId}">see all from this user</a>                                   
+                              <a href="./allBlogs.html?userId=${userId}">see all from this user</a>                                   
                             </div>
                         </div>
                     </div>
@@ -626,7 +628,7 @@ const getAllBlogs = () => {
                             </div>
     
                             <div class="allFromThisUserDiv">
-                              <a href="./allBlogs.html?userId=${blogId}">see all from this user</a>
+                              <a href="./allBlogs.html?userId=${userId}">see all from this user</a>
                             </div>
                         </div>
                       `;
@@ -669,7 +671,7 @@ const getAllBlogs = () => {
                             </div>
     
                             <div class="allFromThisUserDiv">
-                              <a href="./allBlogs.html?userId=${blogId}">see all from this user</a>
+                              <a href="./allBlogs.html?userId=${userId}">see all from this user</a>
                             </div>
                         </div>
                     </div>
@@ -815,6 +817,127 @@ uptIconDiv &&
   });
 
 
-const getBlogsOfSelectedUser = () => {
-  
+const getBlogsOfSelectedUser = async () => {
+  displayLoader()
+  const queryString = location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const userId = urlParams.get("userId");
+
+  const unsub = onSnapshot(doc(db, `user/${userId}`), (doc) => {
+    const imageUrl = doc.data().image;
+    const userNameValue = doc.data().name;
+    const userEmailValue = doc.data().email;
+    userName.innerHTML = userNameValue;
+
+    userEmail.innerHTML = userEmailValue;
+    userImg.src = imageUrl ? imageUrl : location.pathname == "/allBlogs.html" ? "./assets/userIcon.png" : "../assets/userIcon.png"
+
+    const q = query(
+      collection(db, `user/${userId}/blogs`),
+      orderBy("time", "desc")
+    );
+    onSnapshot(q, (querySnapshot) => {
+
+      if (querySnapshot.size == 0) {
+        removeLoader()
+      }
+
+      if (querySnapshot.size) {
+        removeLoader()
+      }
+
+      querySnapshot.docChanges().forEach((blog) => {
+        if (blog.type === "removed") {
+          const dBlog = document.getElementById(blog.doc.id);
+          dBlog.remove();
+        } else if (blog.type === "modified") {
+          const blogId = blog.doc.id;
+          const ModifiedBlog = document.getElementById(blogId);
+          const blogTitle = blog.doc.data().title;
+          const blogDesc = blog.doc.data().description;
+          const time = blog.doc.data().time;
+
+          ModifiedBlog.setAttribute("id", blogId);
+
+          ModifiedBlog.innerHTML = `
+                  <div class="blogCard">
+                      <div class="blogDetailDiv">
+                          <div class="blogImg">
+                              <img src=${imageUrl ? imageUrl : location.pathname == "/allBlogs.html" ? "./assets/userIcon.png" : "../assets/userIcon.png"
+            } alt="">
+                          </div>
+                          <div class="blogDetail">
+                              <div class="blogTitle">
+                                  <h4>
+                                      ${blogTitle}
+                                  </h4>
+                              </div>
+                              <div class="publishDetail">
+                                  <h6>
+                                      Huzaifa Khan - ${time
+              .toDate()
+              .toDateString()}
+                                  </h6>
+                              </div>
+
+                          </div>
+                      </div>
+
+                      <div class="blogDescDiv">
+                          <p>
+                          ${blogDesc}
+                          </p>
+                      </div>
+                  </div>
+                `;
+        } else if (blog.type === "added") {
+          const blogId = blog.doc.id;
+          const blogTitle = blog.doc.data().title;
+          const blogDesc = blog.doc.data().description;
+          const time = blog.doc.data().time;
+          blogCardMainDiv.innerHTML += `
+      <div class="blogCardDiv" id="${blog.doc.id}">
+                  <div class="blogCard">
+                      <div class="blogDetailDiv">
+                          <div class="blogImg">
+                              <img src=${imageUrl ? imageUrl : location.pathname == "/allBlogs.html" ? "./assets/userIcon.png" : "../assets/userIcon.png"
+            } alt="">
+                          </div>
+                          <div class="blogDetail">
+                              <div class="blogTitle">
+                                  <h4>
+                                      ${blogTitle}
+                                  </h4>
+                              </div>
+                              <div class="publishDetail">
+                                  <h6>
+                                      Huzaifa Khan - ${time
+              .toDate()
+              .toDateString()}
+                                  </h6>
+                              </div>
+
+                          </div>
+                      </div>
+
+                      <div class="blogDescDiv">
+                          <p>
+                          ${blogDesc}
+                          </p>
+                      </div>
+                  </div>
+              </div>
+      `;
+        }
+      });
+    })
+  });
+}
+
+if (location.pathname == "/allBlogs.html") {
+  getBlogsOfSelectedUser();
+}
+
+if (location.pathname == "/user/allBlogs.html") {
+  getBlogsOfSelectedUser();
 }
