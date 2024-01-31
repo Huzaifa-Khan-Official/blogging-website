@@ -140,7 +140,7 @@
     line-height: 28px;
 }
 
-.allFromThisUserDiv button {
+.allFromThisUserDiv a {
     color: #7749F8;
     font-family: Inter;
     font-size: 16px;
@@ -149,9 +149,10 @@
     line-height: 28px;
     background-color: transparent;
     border: none;
+    text-decoration: none;
 }
 
-.allFromThisUserDiv button:hover {
+.allFromThisUserDiv a:hover {
     text-decoration: underline;
     transition: all .3s;
 }

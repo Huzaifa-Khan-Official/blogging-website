@@ -170,7 +170,7 @@ const logoutBtn = document.getElementById("logoutBtn");
 logoutBtn &&
   logoutBtn.addEventListener("click", () => {
     displayLoader();
-    signOut(auth).then(() => {});
+    signOut(auth).then(() => { });
   });
 
 const pubBlgBtn = document.getElementById("pubBlgBtn");
@@ -262,9 +262,8 @@ const getAllBlogsOfCurrUser = async (userId) => {
                     <div class="blogCard">
                         <div class="blogDetailDiv">
                             <div class="blogImg">
-                                <img src=${
-                                  imageUrl ? imageUrl : "../assets/userIcon.png"
-                                } alt="">
+                                <img src=${imageUrl ? imageUrl : "../assets/userIcon.png"
+            } alt="">
                             </div>
                             <div class="blogDetail">
                                 <div class="blogTitle">
@@ -275,8 +274,8 @@ const getAllBlogsOfCurrUser = async (userId) => {
                                 <div class="publishDetail">
                                     <h6>
                                         Huzaifa Khan - ${time
-                                          .toDate()
-                                          .toDateString()}
+              .toDate()
+              .toDateString()}
                                     </h6>
                                 </div>
 
@@ -309,9 +308,8 @@ const getAllBlogsOfCurrUser = async (userId) => {
                     <div class="blogCard">
                         <div class="blogDetailDiv">
                             <div class="blogImg">
-                                <img src=${
-                                  imageUrl ? imageUrl : "../assets/userIcon.png"
-                                } alt="">
+                                <img src=${imageUrl ? imageUrl : "../assets/userIcon.png"
+            } alt="">
                             </div>
                             <div class="blogDetail">
                                 <div class="blogTitle">
@@ -322,8 +320,8 @@ const getAllBlogsOfCurrUser = async (userId) => {
                                 <div class="publishDetail">
                                     <h6>
                                         Huzaifa Khan - ${time
-                                          .toDate()
-                                          .toDateString()}
+              .toDate()
+              .toDateString()}
                                     </h6>
                                 </div>
 
@@ -467,11 +465,10 @@ const getAllBlogs = () => {
                         <div class="blogCard">
                             <div class="blogDetailDiv">
                                 <div class="blogImg">
-                                    <img src=${
-                                      imageUrl
-                                        ? imageUrl
-                                        : "../assets/userIcon.png"
-                                    } alt="">
+                                    <img src=${imageUrl
+                  ? imageUrl
+                  : "../assets/userIcon.png"
+                } alt="">
                                 </div>
                                 <div class="blogDetail">
                                     <div class="blogTitle">
@@ -482,8 +479,8 @@ const getAllBlogs = () => {
                                     <div class="publishDetail">
                                         <h6>
                                             ${userName} - ${time
-                .toDate()
-                .toDateString()}
+                  .toDate()
+                  .toDateString()}
                                         </h6>
                                     </div>
     
@@ -497,9 +494,7 @@ const getAllBlogs = () => {
                             </div>
     
                             <div class="allFromThisUserDiv">
-                              <button id="seeAllBlogBtn"  onclick="seeAllBlogsOfUser('${userId}')">
-                              see all from this user
-                               </button>
+                              <a href="./allBlogs.html?userId=${blogId}">see all from this user</a>                              
                             </div>
                         </div>
                       `;
@@ -513,11 +508,10 @@ const getAllBlogs = () => {
                         <div class="blogCard">
                             <div class="blogDetailDiv">
                                 <div class="blogImg">
-                                    <img src=${
-                                      imageUrl
-                                        ? imageUrl 
-                                        : "../assets/userIcon.png"
-                                    } alt="">
+                                    <img src=${imageUrl
+                  ? imageUrl
+                  : "../assets/userIcon.png"
+                } alt="">
                                 </div>
                                 <div class="blogDetail">
                                     <div class="blogTitle">
@@ -528,8 +522,8 @@ const getAllBlogs = () => {
                                     <div class="publishDetail">
                                         <h6>
                                             ${userName} - ${time
-                .toDate()
-                .toDateString()}
+                  .toDate()
+                  .toDateString()}
                                         </h6>
                                     </div>
     
@@ -543,9 +537,7 @@ const getAllBlogs = () => {
                             </div>
     
                             <div class="allFromThisUserDiv">
-                                <button id="seeAllBlogBtn"  onclick="seeAllBlogsOfUser('${userId}')">
-                              see all from this user
-                               </button>
+                              <a href="./allBlogs.html?userId=${blogId}">see all from this user</a>                                   
                             </div>
                         </div>
                     </div>
@@ -605,11 +597,10 @@ const getAllBlogs = () => {
                         <div class="blogCard">
                             <div class="blogDetailDiv">
                                 <div class="blogImg">
-                                    <img src=${
-                                      imageUrl
-                                        ? imageUrl 
-                                        : "../assets/userIcon.png"
-                                    } alt="">
+                                    <img src=${imageUrl
+                  ? imageUrl
+                  : "../assets/userIcon.png"
+                } alt="">
                                 </div>
                                 <div class="blogDetail">
                                     <div class="blogTitle">
@@ -620,54 +611,8 @@ const getAllBlogs = () => {
                                     <div class="publishDetail">
                                         <h6>
                                           ${userName} - ${time
-                .toDate()
-                .toDateString()}
-                                        </h6>
-                                    </div>
-    
-                                </div>
-                            </div>
-    
-                            <div class="blogDescDiv">
-                                <p>
-                                ${blogDesc}
-                                </p>
-                            </div>
-    
-                            <div class="allFromThisUserDiv">                            
-                            <button id="seeAllBlogBtn"  onclick="seeAllBlogsOfUser('${userId}')">
-                            see all from this user
-                             </button>
-                            </div>
-                        </div>
-                      `;
-            } else if (blog.type === "added") {
-              const blogId = blog.doc.id;
-              const blogTitle = blog.doc.data().title;
-              const blogDesc = blog.doc.data().description;
-              const time = blog.doc.data().time;
-              blogCardMainDiv.innerHTML += `
-            <div class="blogCardDiv" id="${blog.doc.id}">
-                        <div class="blogCard">
-                            <div class="blogDetailDiv">
-                                <div class="blogImg">
-                                    <img src=${
-                                      imageUrl
-                                        ? imageUrl 
-                                        : "../assets/userIcon.png"
-                                    } alt="">
-                                </div>
-                                <div class="blogDetail">
-                                    <div class="blogTitle">
-                                        <h4>
-                                            ${blogTitle}
-                                        </h4>
-                                    </div>
-                                    <div class="publishDetail">
-                                        <h6>
-                                          ${userName} - ${time
-                .toDate()
-                .toDateString()}
+                  .toDate()
+                  .toDateString()}
                                         </h6>
                                     </div>
     
@@ -681,9 +626,50 @@ const getAllBlogs = () => {
                             </div>
     
                             <div class="allFromThisUserDiv">
-                              <button id="seeAllBlogBtn"  onclick="seeAllBlogsOfUser('${userId}')">
-                              see all from this user
-                               </button>
+                              <a href="./allBlogs.html?userId=${blogId}">see all from this user</a>
+                            </div>
+                        </div>
+                      `;
+            } else if (blog.type === "added") {
+              const blogId = blog.doc.id;
+              const blogTitle = blog.doc.data().title;
+              const blogDesc = blog.doc.data().description;
+              const time = blog.doc.data().time;
+              blogCardMainDiv.innerHTML += `
+            <div class="blogCardDiv" id="${blogId}">
+                        <div class="blogCard">
+                            <div class="blogDetailDiv">
+                                <div class="blogImg">
+                                    <img src=${imageUrl
+                  ? imageUrl
+                  : "../assets/userIcon.png"
+                } alt="">
+                                </div>
+                                <div class="blogDetail">
+                                    <div class="blogTitle">
+                                        <h4>
+                                            ${blogTitle}
+                                        </h4>
+                                    </div>
+                                    <div class="publishDetail">
+                                        <h6>
+                                          ${userName} - ${time
+                  .toDate()
+                  .toDateString()}
+                                        </h6>
+                                    </div>
+    
+                                </div>
+                            </div>
+    
+                            <div class="blogDescDiv">
+                                <p>
+                                ${blogDesc}
+                                </p>
+                            </div>
+    
+                            <div class="allFromThisUserDiv">
+                              <a href="./allBlogs.html?userId=${blogId}">see all from this user</a>
                             </div>
                         </div>
                     </div>
@@ -701,20 +687,6 @@ if (
   location.pathname == "/user/index.html"
 ) {
   getAllBlogs();
-}
-
-let idOfSelectedUser;
-window.seeAllBlogsOfUser = (id) => {
-  idOfSelectedUser = id;
-  location.href = "/allBlogs.html";
-};
-
-const getAllBlogsOfSelctedUser = () => {
-  console.log(idOfSelectedUser);
-};
-
-if (location.pathname == "/allBlogs.html") {
-  getAllBlogsOfSelctedUser();
 }
 
 const uptBtn = document.getElementById("uptBtn");
@@ -841,3 +813,8 @@ uptIconDiv &&
   uptIconDiv.addEventListener("click", () => {
     userImgInp.click();
   });
+
+
+const getBlogsOfSelectedUser = () => {
+  
+}
