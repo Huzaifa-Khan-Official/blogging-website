@@ -73,7 +73,11 @@ const getUserData = async (id) => {
       removeLoader();
     }
   } else {
-    console.log("No such document!");
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Couldn't find your details!",
+    });
   }
 };
 
@@ -230,7 +234,6 @@ const getAllBlogsOfCurrUser = async () => {
 
     let imageUrl;
     const unsub = onSnapshot(doc(db, "user", userId), (doc) => {
-      console.log(doc.data());
       if (doc.data().image) {
         imageUrl = doc.data().image;
       }
@@ -496,7 +499,7 @@ const getAllBlogs = () => {
     
                             <div class="blogDescDiv">
                                 <p>
-                                ${blogDesc}
+                                ${blogDesc.slice(0, 500)}....
                                 </p>
                             </div>
     
@@ -539,7 +542,7 @@ const getAllBlogs = () => {
     
                             <div class="blogDescDiv">
                                 <p>
-                                ${blogDesc}
+                                ${blogDesc.slice(0, 500)}....
                                 </p>
                             </div>
     
@@ -628,7 +631,7 @@ const getAllBlogs = () => {
     
                             <div class="blogDescDiv">
                                 <p>
-                                ${blogDesc}
+                                ${blogDesc.slice(0, 500)}....
                                 </p>
                             </div>
     
@@ -671,7 +674,7 @@ const getAllBlogs = () => {
     
                             <div class="blogDescDiv">
                                 <p>
-                                ${blogDesc}
+                                ${blogDesc.slice(0, 500)}....
                                 </p>
                             </div>
     
@@ -701,10 +704,11 @@ const userImgInp = document.getElementById("userImgInp");
 
 const downloadImageUrl = (file) => {
   return new Promise((resolve, reject) => {
+    const user = auth.currentUser;
     const userImgRef = ref(
       storage,
       // storage location
-      `usersImages/`
+      `usersImages/${user.uid}`
     );
     const uploadTask = uploadBytesResumable(userImgRef, file);
 

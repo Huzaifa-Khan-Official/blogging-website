@@ -49,6 +49,24 @@
     background-color: #7749F8;
 }
 
+.navbarToggler {
+    display: none;
+    border: none;
+    font-size: 26px;
+    padding: 2px 8px;
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+.navbarToggler:hover {
+    background-color: #7d80825e;
+}
+
+.listDiv.showDiv {
+    display: flex;
+    flex-direction: column;
+}
+
 /* end navbar */
 /* headingDiv */
 .headingDiv {
@@ -220,9 +238,60 @@
 }
 
 /* end loaderDiv */
+@media (max-width: 767px) {
+    .navbar {
+        padding: 10px 10px;
+    }
+
+    .logoDiv {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .navbar>.container-fluid {
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .listDiv {
+        display: none;
+    }
+
+    .navbarToggler {
+        display: block;
+    }
+
+    .listDiv.showDiv {
+        animation: myAnim 1s ease 0s 1 normal forwards;
+        width: 100%;
+    }
+
+    .navbar-expand .navbar-nav {
+        flex-direction: column;
+    }
+}
 
 @media (max-width: 576px) {
     .allBlogDiv {
         padding: 40px 20px;
+    }
+}
+
+@media (max-width: 350px) {
+    .blogDetailDiv {
+        flex-direction: column;
+    }
+
+    .blogCardDiv {
+        padding: 15px;
+    }
+
+    .allBlogDiv {
+        padding: 40px 10px;
+    }
+
+    .headingDiv {
+        padding: 32px 15px;
     }
 }
