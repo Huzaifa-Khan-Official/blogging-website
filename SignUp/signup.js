@@ -27,12 +27,15 @@ function removeLoader() {
 
 const signupBtn = document.getElementById("signupBtn");
 const confirmPasswordInp = document.getElementById("confirmPasswordInp");
+let isUser = false;
+
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
     const docRef = doc(db, "user", user.uid);
     getDoc(docRef).then((docSnap) => {
       if (docSnap.exists()) {
+        isUser = true;
         location.href = "/user/dashboard.html";
       }
     });
@@ -78,6 +81,7 @@ signupBtn.addEventListener("click", () => {
             userId: user.uid,
           });
           removeLoader();
+          isUser = true;
           location.href = "../user/dashboard.html";
         })
         .catch((error) => {

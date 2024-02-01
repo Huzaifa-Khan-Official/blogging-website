@@ -220,15 +220,20 @@ blogDesc &&
     }
   });
 
-const getAllBlogsOfCurrUser = async (userId) => {
+const getAllBlogsOfCurrUser = async () => {
   if (location.pathname == "/user/dashboard.html") {
     blogCardMainDiv.innerHTML = "";
     const spinnerBorder = document.querySelector(".spinner-border");
     const noBlogDiv = document.querySelector(".noBlogDiv");
+    const user = auth.currentUser;
+    const userId = user.uid;
 
     let imageUrl;
     const unsub = onSnapshot(doc(db, "user", userId), (doc) => {
-      imageUrl = doc.data().image;
+      console.log(doc.data());
+      if (doc.data().image) {
+        imageUrl = doc.data().image;
+      }
     });
 
     const q = query(
