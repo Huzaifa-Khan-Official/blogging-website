@@ -214,15 +214,8 @@ pubBlgBtn &&
     }
   });
 
-const blogDesc = document.getElementById("blogDesc");
 const blogCardMainDiv = document.querySelector(".blogCardMainDiv");
 
-blogDesc &&
-  blogDesc.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-      pubBlgBtn.click();
-    }
-  });
 
 const getAllBlogsOfCurrUser = async () => {
   if (location.pathname == "/user/dashboard.html") {
