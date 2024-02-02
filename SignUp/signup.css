@@ -135,4 +135,47 @@ body {
     .formDiv {
         width: 80% !important;
     }
+
+    .navbar {
+        padding: 10px 20px;
+    }
+
+    .navbar>.container-fluid {
+        padding: 0;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .listDiv {
+        width: 100%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .signupBtn {
+        width: fit-content;
+    }
+
+    .navbar-brand {
+        margin-right: 0;
+        font-size: 14px;
+    }
+
+    .navbar-brand img {
+        width: 40px;
+    }
+
+    .formDiv {
+        padding: 40px 15px;
+    }
+
+    .headingDiv {
+        padding: 32px 15px;
+    }
+}
+
+@media (max-width: 230px) {
+    .navbar>.container-fluid {
+        justify-content: center;
+    }
 }
