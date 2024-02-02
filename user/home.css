@@ -209,6 +209,7 @@
 
     .imgDiv img {
         width: 100px;
+        height: 100px;
     }
 
     .uptIconDiv i {
@@ -219,5 +220,56 @@
 @media (max-width: 576px) {
     .formDiv {
         width: 80% !important;
+    }
+
+    .listDiv {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .navbar>.container-fluid {
+        gap: 20px;
+    }
+
+    .navbar {
+        padding: 10px 10px;
+    }
+
+    .nav-link {
+        width: fit-content;
+    }
+}
+
+@media (max-width: 300px) {
+    .formDiv {
+        padding: 40px 20px;
+    }
+
+    .headingDiv {
+        padding: 32px 20px;
+    }
+}
+
+@media (max-width: 285px) {
+    
+    .navbar>.container-fluid {
+        justify-content: center;
+    }
+
+
+    .imgDiv {
+        padding: 10px 10px;
+    }
+    .imgDiv img {
+        width: 100%;
+        height: auto;
+    }
+
+    .navbar-brand {
+        font-size: 14px;
+    }
+
+    .navbar-brand img {
+        width: 40px;
     }
 }
