@@ -247,11 +247,14 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
     }
 
     .navbar>.container-fluid {
         flex-direction: column;
         align-items: start;
+        gap: 20px;
     }
 
     .listDiv {
@@ -293,5 +296,23 @@
 
     .headingDiv {
         padding: 32px 15px;
+    }
+}
+
+
+@media (max-width: 268px) {
+    .logoDiv {
+        justify-content: center;
+    }
+
+    .navbar-brand {
+        font-size: 14px;
+    }
+    .navbar-brand img {
+        width: 40px;
+    }
+
+    .navbar>.container-fluid {
+        padding: 0;
     }
 }

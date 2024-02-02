@@ -311,4 +311,12 @@
     .navbar>.container-fluid {
         justify-content: center;
     }
+
+    .navbar-brand {
+        font-size: 14px;
+    }
+
+    .navbar-brand img {
+        width: 40px;
+    }
 }

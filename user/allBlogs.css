@@ -277,3 +277,40 @@
         padding: 40px 20px;
     }
 }
+
+@media (max-width: 350px) {
+    .blogDetailDiv {
+        flex-direction: column;
+    }
+
+    .blogCardDiv {
+        padding: 15px;
+    }
+
+    .allBlogDiv {
+        padding: 40px 10px;
+    }
+
+    .headingDiv {
+        padding: 32px 15px;
+    }
+
+    .profileNameDiv h1 {
+        font-size: 28px;
+    }
+
+    .profileEmailDiv p {
+        word-break: break-all;
+    }
+
+    .profileImgDiv img {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 300px) {
+    .navbar>.container-fluid {
+        justify-content: center;
+    }
+}
