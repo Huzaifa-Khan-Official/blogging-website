@@ -32,6 +32,10 @@ const userEmail = document.getElementById("userEmail");
 
 let userId;
 
+if (location.pathname == "/") {
+  location.href = "/index.html"
+}
+
 function displayLoader() {
   loaderDiv.style.display = "flex";
   document.body.style.overflowY = "hidden";
@@ -226,10 +230,12 @@ const getAllBlogsOfCurrUser = async () => {
     const userId = user.uid;
 
     let imageUrl;
+    let userNameValue;
     const unsub = onSnapshot(doc(db, "user", userId), (doc) => {
       if (doc.data().image) {
         imageUrl = doc.data().image;
       }
+      userNameValue = doc.data().name
     });
 
     const q = query(
@@ -276,7 +282,7 @@ const getAllBlogsOfCurrUser = async () => {
                                 </div>
                                 <div class="publishDetail">
                                     <h6>
-                                        Huzaifa Khan - ${time
+                                        ${userNameValue} - ${time
               .toDate()
               .toDateString()}
                                     </h6>
@@ -322,7 +328,7 @@ const getAllBlogsOfCurrUser = async () => {
                                 </div>
                                 <div class="publishDetail">
                                     <h6>
-                                        Huzaifa Khan - ${time
+                                        ${userNameValue} - ${time
               .toDate()
               .toDateString()}
                                     </h6>
@@ -876,7 +882,7 @@ const getBlogsOfSelectedUser = async () => {
                               </div>
                               <div class="publishDetail">
                                   <h6>
-                                      Huzaifa Khan - ${time
+                                      ${userNameValue} - ${time
               .toDate()
               .toDateString()}
                                   </h6>
@@ -913,7 +919,7 @@ const getBlogsOfSelectedUser = async () => {
                               </div>
                               <div class="publishDetail">
                                   <h6>
-                                      Huzaifa Khan - ${time
+                                      ${userNameValue} - ${time
               .toDate()
               .toDateString()}
                                   </h6>
